@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: rcs_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: rcsintegra
+      POSTGRES_PASSWORD: rcsintegra123
+      POSTGRES_DB: rcsintegra
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rcsintegra -d rcsintegra"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rcs_gateway:
+    build: .
+    container_name: rcs_gateway
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://rcsintegra:rcsintegra123@postgres:5432/rcsintegra
+      - RCS_API_BASE_URL=https://pointer-rcs-api-node.pontaltech.com.br
+      - RCS_API_TOKEN=${RCS_API_TOKEN}
+      - GATEWAY_HOST=0.0.0.0
+      - GATEWAY_PORT=8000
+      - DEBUG=False
+      - SIMULATION_MODE=${SIMULATION_MODE:-False}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./logs:/app/logs
+
+volumes:
+  postgres_data:
