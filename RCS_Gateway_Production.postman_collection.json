@@ -1,0 +1,204 @@
+{
+	"info": {
+		"_postman_id": "rcs-gateway-prod-2025",
+		"name": "RCS Gateway - Production Server",
+		"description": "Collection completa para testar o RCS Gateway em produção\n\n🌐 **Servidor**: http://api-plataform.com:8000\n📚 **Documentação**: http://api-plataform.com:8000/docs\n🔗 **Callback**: http://api-plataform.com:8000/api/rcs/callback\n\n## Funcionalidades:\n- ✅ Health Check\n- ✅ Envio de mensagens RCS\n- ✅ Gerenciamento de templates\n- ✅ Consulta de mensagens\n- ✅ Validação de respostas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "🏥 Health Check",
+			"item": [
+				{
+					"name": "API Health Check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"API is healthy\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.status).to.eql('healthy');",
+									"    pm.expect(jsonData.message).to.include('RCS Gateway API');",
+									"});",
+									"",
+									"pm.test(\"Response time < 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/",
+							"host": ["{{base_url}}"],
+							"path": [""]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "📱 Envio de Mensagens",
+			"item": [
+				{
+					"name": "RCS Basic - Texto Simples",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Message sent successfully\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('array');",
+									"    pm.expect(jsonData[0]).to.have.property('id');",
+									"    pm.expect(jsonData[0]).to.have.property('status');",
+									"    ",
+									"    // Salvar ID da mensagem para consultas posteriores",
+									"    pm.globals.set('last_message_id', jsonData[0].id);",
+									"});",
+									"",
+									"pm.test(\"Response has correct structure\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0]).to.have.property('message');",
+									"    pm.expect(jsonData[0]).to.have.property('created_at');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"campaign_name\": \"Teste Postman - RCS Basic\",\n  \"account\": \"{{account_id}}\",\n  \"messages\": [\n    {\n      \"number\": \"{{test_phone}}\",\n      \"vars\": {\n        \"nome\": \"Usuário Teste\",\n        \"produto\": \"RCS Gateway\"\n      }\n    }\n  ],\n  \"content\": {\n    \"text\": {\n      \"message\": \"🎯 Teste RCS Basic: Olá {{nome}}! Seu {{produto}} está funcionando perfeitamente!\"\n    }\n  },\n  \"callback\": \"http://api-plataform.com:8000/api/rcs/callback\",\n  \"fallback\": [\n    {\n      \"channel\": \"SMS\",\n      \"content\": \"Ola {{nome}}! Seu {{produto}} esta funcionando!\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rcs/basic",
+							"host": ["{{base_url}}"],
+							"path": ["api", "rcs", "basic"]
+						}
+					}
+				},
+				{
+					"name": "RCS Single - Rich Card",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Rich Card sent successfully\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('array');",
+									"    pm.expect(jsonData[0]).to.have.property('id');",
+									"    pm.globals.set('last_richcard_id', jsonData[0].id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"account\": \"{{account_id}}\",\n  \"messages\": [\n    {\n      \"number\": \"{{test_phone}}\",\n      \"vars\": {\n        \"nome\": \"Usuário Teste\"\n      }\n    }\n  ],\n  \"content\": {\n    \"richCard\": {\n      \"title\": \"🎉 RCS Gateway Funcionando!\",\n      \"description\": \"Olá {{nome}}! Seu sistema RCS está operacional e enviando Rich Cards perfeitamente.\",\n      \"fileUrl\": \"https://via.placeholder.com/500x300/4CAF50/FFFFFF?text=RCS+Gateway+OK\",\n      \"suggestions\": [\n        {\n          \"type\": \"reply\",\n          \"title\": \"✅ Funcionou!\",\n          \"value\": \"Sistema funcionando perfeitamente!\"\n        },\n        {\n          \"type\": \"openUrl\",\n          \"title\": \"📚 Documentação\",\n          \"value\": \"http://api-plataform.com:8000/docs\"\n        },\n        {\n          \"type\": \"call\",\n          \"title\": \"📞 Suporte\",\n          \"value\": \"1140001234\"\n        }\n      ]\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rcs/single",
+							"host": ["{{base_url}}"],
+							"path": ["api", "rcs", "single"]
+						}
+					}
+				},
+				{
+					"name": "RCS Single - Carousel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Carousel sent successfully\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('array');",
+									"    pm.expect(jsonData[0]).to.have.property('id');",
+									"    pm.globals.set('last_carousel_id', jsonData[0].id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"account\": \"{{account_id}}\",\n  \"messages\": [\n    {\n      \"number\": \"{{test_phone}}\"\n    }\n  ],\n  \"content\": {\n    \"carousel\": [\n      {\n        \"title\": \"🚀 RCS Gateway\",\n        \"description\": \"Sistema de mensagens RCS funcionando perfeitamente!\",\n        \"fileUrl\": \"https://via.placeholder.com/500x300/2196F3/FFFFFF?text=RCS+Gateway\",\n        \"suggestions\": [\n          {\n            \"type\": \"reply\",\n            \"title\": \"✅ Perfeito\",\n            \"value\": \"Gateway funcionando!\"\n          }\n        ]\n      },\n      {\n        \"title\": \"📊 Status API\",\n        \"description\": \"Conexão com PontalTech estabelecida e operacional!\",\n        \"fileUrl\": \"https://via.placeholder.com/500x300/4CAF50/FFFFFF?text=API+Conectada\",\n        \"suggestions\": [\n          {\n            \"type\": \"openUrl\",\n            \"title\": \"📈 Monitorar\",\n            \"value\": \"http://api-plataform.com:8000\"\n          }\n        ]\n      },\n      {\n        \"title\": \"🔧 Configuração\",\n        \"description\": \"Sistema configurado e pronto para produção!\",\n        \"fileUrl\": \"https://via.placeholder.com/500x300/FF9800/FFFFFF?text=Configurado\",\n        \"suggestions\": [\n          {\n            \"type\": \"reply\",\n            \"title\": \"📋 Detalhes\",\n            \"value\": \"Quero ver configurações\"\n          }\n        ]\n      }\n    ]\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rcs/single",
+							"host": ["{{base_url}}"],
+							"path": ["api", "rcs", "single"]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://api-plataform.com:8000",
+			"type": "string"
+		},
+		{
+			"key": "account_id",
+			"value": "15885",
+			"type": "string"
+		},
+		{
+			"key": "test_phone",
+			"value": "5516982089942",
+			"type": "string"
+		}
+	]
+}

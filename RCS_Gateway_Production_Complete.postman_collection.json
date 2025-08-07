@@ -1,0 +1,662 @@
+{
+	"info": {
+		"_postman_id": "rcs-gateway-prod-complete-2025",
+		"name": "RCS Gateway - Production Complete",
+		"description": "Collection completa para testar o RCS Gateway em produção\n\n🌐 **Servidor**: http://api-plataform.com:8000\n📚 **Documentação**: http://api-plataform.com:8000/docs\n🔗 **Callback**: http://api-plataform.com:8000/api/rcs/callback\n\n## Funcionalidades:\n- ✅ Health Check\n- ✅ Envio de mensagens RCS (Basic, Single, Webhook, Template)\n- ✅ Gerenciamento de templates\n- ✅ Consulta de mensagens e status\n- ✅ Validação completa de respostas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "🏥 Health Check",
+			"item": [
+				{
+					"name": "API Health Check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"API is healthy\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.status).to.eql('healthy');",
+									"    pm.expect(jsonData.message).to.include('RCS Gateway API');",
+									"});",
+									"",
+									"pm.test(\"Response time < 2000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/",
+							"host": ["{{base_url}}"],
+							"path": [""]
+						}
+					}
+				},
+				{
+					"name": "API Documentation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Documentation is accessible\", function () {",
+									"    pm.expect(pm.response.text()).to.include('swagger-ui');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/docs",
+							"host": ["{{base_url}}"],
+							"path": ["docs"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "📱 Envio de Mensagens",
+			"item": [
+				{
+					"name": "RCS Basic - Texto Simples",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Message sent successfully\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('array');",
+									"    pm.expect(jsonData[0]).to.have.property('id');",
+									"    pm.expect(jsonData[0]).to.have.property('status');",
+									"    pm.globals.set('last_message_id', jsonData[0].id);",
+									"});",
+									"",
+									"pm.test(\"Response has correct structure\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0]).to.have.property('message');",
+									"    pm.expect(jsonData[0]).to.have.property('created_at');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"campaign_name\": \"Teste Postman - RCS Basic\",\n  \"account\": \"{{account_id}}\",\n  \"messages\": [\n    {\n      \"number\": \"{{test_phone}}\",\n      \"vars\": {\n        \"nome\": \"Usuário Teste\",\n        \"produto\": \"RCS Gateway\"\n      }\n    }\n  ],\n  \"content\": {\n    \"text\": {\n      \"message\": \"🎯 Teste RCS Basic: Olá {{nome}}! Seu {{produto}} está funcionando perfeitamente!\"\n    }\n  },\n  \"callback\": \"http://api-plataform.com:8000/api/rcs/callback\",\n  \"fallback\": [\n    {\n      \"channel\": \"SMS\",\n      \"content\": \"Ola {{nome}}! Seu {{produto}} esta funcionando!\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rcs/basic",
+							"host": ["{{base_url}}"],
+							"path": ["api", "rcs", "basic"]
+						}
+					}
+				},
+				{
+					"name": "RCS Single - Rich Card",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Rich Card sent successfully\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('array');",
+									"    pm.expect(jsonData[0]).to.have.property('id');",
+									"    pm.globals.set('last_richcard_id', jsonData[0].id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"account\": \"{{account_id}}\",\n  \"messages\": [\n    {\n      \"number\": \"{{test_phone}}\",\n      \"vars\": {\n        \"nome\": \"Usuário Teste\"\n      }\n    }\n  ],\n  \"content\": {\n    \"richCard\": {\n      \"title\": \"🎉 RCS Gateway Funcionando!\",\n      \"description\": \"Olá {{nome}}! Seu sistema RCS está operacional e enviando Rich Cards perfeitamente.\",\n      \"fileUrl\": \"https://via.placeholder.com/500x300/4CAF50/FFFFFF?text=RCS+Gateway+OK\",\n      \"suggestions\": [\n        {\n          \"type\": \"reply\",\n          \"title\": \"✅ Funcionou!\",\n          \"value\": \"Sistema funcionando perfeitamente!\"\n        },\n        {\n          \"type\": \"openUrl\",\n          \"title\": \"📚 Documentação\",\n          \"value\": \"http://api-plataform.com:8000/docs\"\n        },\n        {\n          \"type\": \"call\",\n          \"title\": \"📞 Suporte\",\n          \"value\": \"1140001234\"\n        }\n      ]\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rcs/single",
+							"host": ["{{base_url}}"],
+							"path": ["api", "rcs", "single"]
+						}
+					}
+				},
+				{
+					"name": "RCS Webhook - Conversacional",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Webhook message sent\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('array');",
+									"    pm.expect(jsonData[0]).to.have.property('id');",
+									"    pm.globals.set('last_webhook_id', jsonData[0].id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"account\": \"{{account_id}}\",\n  \"webhook\": \"http://api-plataform.com:8000/api/rcs/callback\",\n  \"messages\": [\n    {\n      \"number\": \"{{test_phone}}\"\n    }\n  ],\n  \"content\": {\n    \"text\": {\n      \"message\": \"🤖 Mensagem conversacional ativa! Como posso ajudá-lo hoje? Responda esta mensagem para testar o webhook.\"\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rcs/webhook",
+							"host": ["{{base_url}}"],
+							"path": ["api", "rcs", "webhook"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "📋 Gerenciamento de Templates",
+			"item": [
+				{
+					"name": "Criar Template - Rich Card",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Template created successfully\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('id');",
+									"    pm.expect(jsonData).to.have.property('template_id');",
+									"    pm.globals.set('created_template_id', jsonData.id);",
+									"    pm.globals.set('created_template_external_id', jsonData.template_id);",
+									"});",
+									"",
+									"pm.test(\"Template has correct structure\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('name');",
+									"    pm.expect(jsonData).to.have.property('content_type');",
+									"    pm.expect(jsonData.content_type).to.eql('richCard');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Template Postman - Boas Vindas\",\n  \"account\": \"{{account_id}}\",\n  \"content_type\": \"richCard\",\n  \"template_data\": {\n    \"title\": \"🎉 Bem-vindo {{nome}}!\",\n    \"description\": \"Obrigado por se cadastrar em nossa plataforma {{empresa}}! Estamos felizes em tê-lo conosco.\",\n    \"fileUrl\": \"https://via.placeholder.com/500x300/4CAF50/FFFFFF?text=Bem-vindo\",\n    \"suggestions\": [\n      {\n        \"type\": \"reply\",\n        \"title\": \"✅ Começar\",\n        \"value\": \"Quero começar a usar!\"\n      },\n      {\n        \"type\": \"openUrl\",\n        \"title\": \"📚 Tutorial\",\n        \"value\": \"https://exemplo.com/tutorial\"\n      },\n      {\n        \"type\": \"call\",\n        \"title\": \"📞 Suporte\",\n        \"value\": \"1140001234\"\n      }\n    ]\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rcs/templates",
+							"host": ["{{base_url}}"],
+							"path": ["api", "rcs", "templates"]
+						}
+					}
+				},
+				{
+					"name": "Listar Todos os Templates",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Templates list is array\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"Templates have correct structure\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    if (jsonData.length > 0) {",
+									"        pm.expect(jsonData[0]).to.have.property('id');",
+									"        pm.expect(jsonData[0]).to.have.property('name');",
+									"        pm.expect(jsonData[0]).to.have.property('content_type');",
+									"        pm.expect(jsonData[0]).to.have.property('created_at');",
+									"    }",
+									"});",
+									"",
+									"console.log(`Total de templates encontrados: ${pm.response.json().length}`);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/templates",
+							"host": ["{{base_url}}"],
+							"path": ["api", "templates"]
+						}
+					}
+				},
+				{
+					"name": "Usar Template Criado",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Verificar se temos um template_id salvo",
+									"const templateId = pm.globals.get('created_template_external_id');",
+									"if (!templateId) {",
+									"    console.log('⚠️ Nenhum template_id encontrado. Execute \"Criar Template\" primeiro.');",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Template message sent\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('array');",
+									"    pm.expect(jsonData[0]).to.have.property('id');",
+									"    pm.globals.set('last_template_message_id', jsonData[0].id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"account\": \"{{account_id}}\",\n  \"webhook\": \"http://api-plataform.com:8000/api/rcs/callback\",\n  \"messages\": [\n    {\n      \"number\": \"{{test_phone}}\",\n      \"vars\": {\n        \"nome\": \"João Silva\",\n        \"empresa\": \"RCS Gateway\"\n      }\n    }\n  ],\n  \"template_id\": \"{{created_template_external_id}}\",\n  \"bot_id\": \"bot_postman_test\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rcs/template",
+							"host": ["{{base_url}}"],
+							"path": ["api", "rcs", "template"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "📊 Consultas e Status",
+			"item": [
+				{
+					"name": "Listar Mensagens Recentes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Messages list is array\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"Messages have correct structure\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    if (jsonData.length > 0) {",
+									"        pm.expect(jsonData[0]).to.have.property('id');",
+									"        pm.expect(jsonData[0]).to.have.property('status');",
+									"        pm.expect(jsonData[0]).to.have.property('phone_number');",
+									"        pm.expect(jsonData[0]).to.have.property('created_at');",
+									"    }",
+									"});",
+									"",
+									"// Log estatísticas",
+									"const messages = pm.response.json();",
+									"const statusCount = {};",
+									"messages.forEach(msg => {",
+									"    statusCount[msg.status] = (statusCount[msg.status] || 0) + 1;",
+									"});",
+									"console.log(`📊 Estatísticas das mensagens:`, statusCount);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/messages?limit=10",
+							"host": ["{{base_url}}"],
+							"path": ["api", "messages"],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Consultar Mensagem Específica",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Usar o ID da última mensagem enviada",
+									"const messageId = pm.globals.get('last_message_id');",
+									"if (!messageId) {",
+									"    console.log('⚠️ Nenhum message_id encontrado. Execute um envio de mensagem primeiro.');",
+									"    pm.globals.set('last_message_id', '1'); // Fallback para ID 1",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Message details are complete\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('id');",
+									"    pm.expect(jsonData).to.have.property('status');",
+									"    pm.expect(jsonData).to.have.property('phone_number');",
+									"    pm.expect(jsonData).to.have.property('created_at');",
+									"});",
+									"",
+									"// Log detalhes da mensagem",
+									"const message = pm.response.json();",
+									"console.log(`📱 Mensagem ID ${message.id}:`);",
+									"console.log(`   Status: ${message.status}`);",
+									"console.log(`   Telefone: ${message.phone_number}`);",
+									"console.log(`   Criada em: ${message.created_at}`);",
+									"if (message.sent_at) console.log(`   Enviada em: ${message.sent_at}`);",
+									"if (message.error_message) console.log(`   ❌ Erro: ${message.error_message}`);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/messages/{{last_message_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "messages", "{{last_message_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Filtrar Mensagens por Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"All messages have expected status\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const expectedStatus = pm.request.url.query.get('status');",
+									"    if (expectedStatus && jsonData.length > 0) {",
+									"        jsonData.forEach(message => {",
+									"            pm.expect(message.status).to.eql(expectedStatus);",
+									"        });",
+									"    }",
+									"});",
+									"",
+									"console.log(`Mensagens encontradas: ${pm.response.json().length}`);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/messages?status=sent&limit=5",
+							"host": ["{{base_url}}"],
+							"path": ["api", "messages"],
+							"query": [
+								{
+									"key": "status",
+									"value": "sent"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "🔄 Callbacks e Webhooks",
+			"item": [
+				{
+					"name": "Simular Callback de Entrega",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Callback processed successfully\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('message');",
+									"    pm.expect(jsonData.message).to.include('Callback recebido');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"messageId\": \"test-callback-123\",\n  \"status\": \"delivered\",\n  \"timestamp\": \"2025-08-06T17:00:00Z\",\n  \"phoneNumber\": \"{{test_phone}}\",\n  \"eventType\": \"delivery_status\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rcs/callback",
+							"host": ["{{base_url}}"],
+							"path": ["api", "rcs", "callback"]
+						}
+					}
+				},
+				{
+					"name": "Simular Resposta do Usuário",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"User response processed\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('message');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"messageId\": \"user-response-456\",\n  \"phoneNumber\": \"{{test_phone}}\",\n  \"message\": \"Olá! Esta é uma resposta de teste do usuário.\",\n  \"timestamp\": \"2025-08-06T17:05:00Z\",\n  \"eventType\": \"user_response\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rcs/callback",
+							"host": ["{{base_url}}"],
+							"path": ["api", "rcs", "callback"]
+						}
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Configurar variáveis globais automaticamente",
+					"if (!pm.globals.get('base_url')) {",
+					"    pm.globals.set('base_url', 'http://api-plataform.com:8000');",
+					"}",
+					"if (!pm.globals.get('account_id')) {",
+					"    pm.globals.set('account_id', '15885');",
+					"}",
+					"if (!pm.globals.get('test_phone')) {",
+					"    pm.globals.set('test_phone', '5516982089942');",
+					"}",
+					"",
+					"// Log da requisição",
+					"console.log(`🚀 Executando: ${pm.info.requestName}`);"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Log do resultado",
+					"const status = pm.response.code;",
+					"const time = pm.response.responseTime;",
+					"console.log(`✅ Resposta: ${status} (${time}ms)`);"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://api-plataform.com:8000",
+			"type": "string"
+		},
+		{
+			"key": "account_id",
+			"value": "15885",
+			"type": "string"
+		},
+		{
+			"key": "test_phone",
+			"value": "5516982089942",
+			"type": "string"
+		}
+	]
+}
