@@ -1,6 +1,6 @@
 # RCS Gateway API
 
-Gateway em Python para integração com a API RCS da PontalTech. Este sistema recebe dados, armazena no banco de dados PostgreSQL e dispara mensagens para a API RCS.
+Gateway em Python para integração com a API RCS da Eugen. Este sistema recebe dados, armazena no banco de dados PostgreSQL e dispara mensagens para a API RCS.
 
 ## Funcionalidades
 
@@ -274,7 +274,7 @@ O sistema gera logs detalhados para:
 
 ## Segurança
 
-- **Bearer Token**: Autenticação via token da PontalTech
+- **Bearer Token**: Autenticação via token 
 - **CORS**: Configuração de CORS para APIs web
 - **Validação**: Validação rigorosa de todos os dados de entrada
 - **Logs**: Não exposição de dados sensíveis nos logs
@@ -522,8 +522,8 @@ DEBUG=False
 
 ## Suporte
 
-Para dúvidas sobre a API RCS da PontalTech, entre em contato:
-- Email: apoio.ca@pontaltech.com.br
+Para dúvidas sobre a API RCS da Eugen, entre em contato:
+- Email: contato@eugen.com.br
 
 Para questões sobre este gateway, abra uma issue no repositório.
 
