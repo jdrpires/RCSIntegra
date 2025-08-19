@@ -12,7 +12,7 @@ async def quick_template_test():
     """Teste rápido com template"""
     
     # CONFIGURE AQUI:
-    TEMPLATE_ID = input("Digite o template_id da plataforma PontalTech: ").strip()
+    TEMPLATE_ID = input("Digite o template_id da plataforma Eugen: ").strip()
     
     if not TEMPLATE_ID:
         print("❌ Template ID é obrigatório!")
@@ -82,7 +82,7 @@ async def quick_template_test():
 if __name__ == "__main__":
     print("🚀 Teste Rápido - RCS Single com Template")
     print("=" * 50)
-    print("ℹ️  Este teste usa um template_id da plataforma PontalTech")
+    print("ℹ️  Este teste usa um template_id da plataforma Eugen")
     print("ℹ️  O template deve estar criado na sua conta")
     print()
     

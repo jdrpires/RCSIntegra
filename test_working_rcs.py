@@ -95,7 +95,7 @@ async def test_working_rcs_single():
                 },
                 {
                     "title": "📊 Status API",
-                    "description": "Conexão com PontalTech estabelecida!",
+                    "description": "Conexão com Eugen estabelecida!",
                     "fileUrl": "https://via.placeholder.com/500x300/4CAF50/FFFFFF?text=API+OK",
                     "suggestions": [
                         {

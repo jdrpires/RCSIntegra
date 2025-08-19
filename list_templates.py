@@ -10,7 +10,7 @@ BASE_URL = "http://localhost:8000"
 
 async def simple_list_templates():
     """Lista templates de forma simples"""
-    print("🔍 Buscando templates na plataforma PontalTech...")
+    print("🔍 Buscando templates na plataforma Eugen...")
     
     async with httpx.AsyncClient(timeout=30.0) as client:
         try:

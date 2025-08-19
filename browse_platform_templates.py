@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script para buscar e testar templates diretamente da plataforma PontalTech
+Script para buscar e testar templates diretamente da plataforma Eugen
 """
 
 import httpx
@@ -11,7 +11,7 @@ BASE_URL = "http://localhost:8000"
 
 async def list_platform_templates():
     """Lista todos os templates disponíveis na plataforma"""
-    print("🔍 Buscando templates na plataforma PontalTech...")
+    print("🔍 Buscando templates na plataforma Eugen...")
     
     async with httpx.AsyncClient(timeout=30.0) as client:
         try:
@@ -216,7 +216,7 @@ async def interactive_template_browser():
             print("❌ Opção inválida!")
 
 async def main():
-    print("🎯 Buscar Templates da Plataforma PontalTech")
+    print("🎯 Buscar Templates da Plataforma Eugen")
     print("=" * 60)
     
     mode = input("Escolha o modo:\n1. 🤖 Automático (lista e testa)\n2. 🎛️  Interativo\nOpção (1-2): ").strip()

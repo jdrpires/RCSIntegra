@@ -60,7 +60,7 @@ Edite o arquivo `.env` com suas configurações:
 DATABASE_URL=postgresql://username:password@localhost:5432/rcs_gateway
 
 # RCS API Configuration
-RCS_API_BASE_URL=https://pointer-rcs-api-node.pontaltech.com.br
+RCS_API_BASE_URL=https://pointer-rcs-api-node.eugen.com.br
 RCS_API_TOKEN=seu_token_bearer_aqui
 
 # Gateway Configuration

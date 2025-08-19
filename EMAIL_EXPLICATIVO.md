@@ -1,8 +1,8 @@
-# 🚀 RCS Gateway API - Integração PontalTech
+# 🚀 RCS Gateway API - Integração Eugen
 
 ## 📋 Resumo Executivo
 
-Desenvolvemos e implementamos com sucesso o **RCS Gateway API**, uma solução completa para integração com a plataforma RCS da PontalTech. O sistema está **100% funcional** e pronto para uso em produção.
+Desenvolvemos e implementamos com sucesso o **RCS Gateway API**, uma solução completa para integração com a plataforma RCS da Eugen. O sistema está **100% funcional** e pronto para uso em produção.
 
 ## ✅ Status do Projeto
 
@@ -57,7 +57,7 @@ Desenvolvemos e implementamos com sucesso o **RCS Gateway API**, uma solução c
 - **API**: RESTful com documentação Swagger automática
 
 ### **Integração**
-- **API RCS**: PontalTech (https://pointer-rcs-api-node.pontaltech.com.br)
+- **API RCS**: Eugen (https://pointer-rcs-api-node.eugen.com.br)
 - **Autenticação**: Bearer Token
 - **Formato**: JSON padronizado
 - **Callbacks**: Webhook bidirecional
@@ -134,7 +134,7 @@ Desenvolvemos e implementamos com sucesso o **RCS Gateway API**, uma solução c
 - ✅ Criação de templates dinâmicos
 - ✅ Substituição de variáveis
 - ✅ Armazenamento no PostgreSQL
-- ✅ Integração com API PontalTech
+- ✅ Integração com API Eugen
 - ✅ Callbacks e webhooks
 - ✅ Tratamento de erros
 
@@ -144,7 +144,7 @@ Desenvolvemos e implementamos com sucesso o **RCS Gateway API**, uma solução c
 ```env
 # API RCS
 RCS_API_TOKEN=seu_token_bearer_aqui
-RCS_API_BASE_URL=https://pointer-rcs-api-node.pontaltech.com.br
+RCS_API_BASE_URL=https://pointer-rcs-api-node.eugen.com.br
 
 # Banco de Dados
 DATABASE_URL=postgresql://user:pass@host:5432/database
@@ -157,7 +157,7 @@ SIMULATION_MODE=False
 ```
 
 ### **Para Ativar Produção**
-1. Configurar IP liberado na PontalTech
+1. Configurar IP liberado na Eugen
 2. Definir `SIMULATION_MODE=False`
 3. Configurar webhook público para callbacks
 4. Ajustar `account_id` para conta real
@@ -166,7 +166,7 @@ SIMULATION_MODE=False
 ## 📈 Próximos Passos
 
 ### **Imediatos**
-1. **Liberação de IP** na plataforma PontalTech
+1. **Liberação de IP** na plataforma Eugen
 2. **Configuração de webhook** público para callbacks
 3. **Testes com números reais** (após liberação de IP)
 4. **Deploy em ambiente de produção**
@@ -215,4 +215,4 @@ Para dúvidas técnicas ou suporte:
 
 **🎉 O RCS Gateway API está pronto para uso e totalmente funcional!**
 
-*Sistema desenvolvido com integração completa à plataforma PontalTech, incluindo todas as funcionalidades RCS: Basic, Single, Conversacional e Templates.*
+*Sistema desenvolvido com integração completa à plataforma Eugen, incluindo todas as funcionalidades RCS: Basic, Single, Conversacional e Templates.*

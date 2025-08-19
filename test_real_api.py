@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Teste com API real da PontalTech
+Teste com API real da Eugen
 """
 
 import httpx
@@ -10,8 +10,8 @@ import json
 BASE_URL = "http://localhost:8000"
 
 async def test_real_api():
-    """Testa com API real da PontalTech"""
-    print("🚀 Testando com API REAL da PontalTech\n")
+    """Testa com API real da Eugen"""
+    print("🚀 Testando com API REAL da Eugen\n")
     
     # IMPORTANTE: Use seus dados reais aqui
     real_data = {
@@ -92,7 +92,7 @@ if __name__ == "__main__":
     print("   - SIMULATION_MODE=False no .env")
     print("   - Account ID está correto")
     print("   - Token está válido")
-    print("   - IP foi liberado pela PontalTech")
+    print("   - IP foi liberado pela Eugen")
     print()
     
     confirm = input("Deseja continuar? (s/N): ")

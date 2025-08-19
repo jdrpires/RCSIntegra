@@ -76,7 +76,7 @@ Cada requisição inclui testes automatizados que verificam:
 - `read` - Mensagem lida pelo usuário
 
 ### **Códigos de Erro Comuns**
-- `403 Forbidden` - IP não liberado na PontalTech
+- `403 Forbidden` - IP não liberado na Eugen
 - `400 Bad Request` - Dados inválidos na requisição
 - `500 Internal Server Error` - Erro interno do servidor
 
@@ -89,7 +89,7 @@ Cada requisição inclui testes automatizados que verificam:
   "message": "IP address is not allowed: 195.26.251.151"
 }
 ```
-**Solução**: Solicitar liberação do IP para `apoio.ca@pontaltech.com.br`
+**Solução**: Solicitar liberação do IP para `apoio.ca@eugen.com.br`
 
 ### **Problema: Template não encontrado**
 ```json

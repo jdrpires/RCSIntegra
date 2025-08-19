@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 class RCSAPIClient:
     def __init__(self):
-        self.base_url = os.getenv("RCS_API_BASE_URL", "https://pointer-rcs-api-node.pontaltech.com.br")
+        self.base_url = os.getenv("RCS_API_BASE_URL", "https://pointer-rcs-api-node.eugen.com.br")
         self.token = os.getenv("RCS_API_TOKEN")
         self.simulation_mode = os.getenv("SIMULATION_MODE", "False").lower() == "true"
         
@@ -153,7 +153,7 @@ class RCSAPIClient:
                     continue
         
         # Se não encontrou nenhum endpoint, retorna erro informativo
-        raise Exception("Não foi possível encontrar endpoint para listar templates. Contate apoio.ca@pontaltech.com.br")
+        raise Exception("Não foi possível encontrar endpoint para listar templates. Contate apoio.ca@eugen.com.br")
     
     async def get_template_by_id(self, template_id: str) -> Dict[str, Any]:
         """Busca um template específico por ID"""

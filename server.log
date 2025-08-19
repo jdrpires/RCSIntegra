@@ -1,213 +1,90 @@
+2025-08-13 14:56:02,180 - __main__ - INFO - Sistema de autenticação ativado
 INFO:     Will watch for changes in these directories: ['/Users/jeanpires/GitHub/RCSIntegra']
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process [4891] using StatReload
-INFO:     Started server process [4893]
+INFO:     Started reloader process [7215] using StatReload
+✅ Tabelas de autenticação importadas
+2025-08-13 14:56:02,641 - __mp_main__ - INFO - Sistema de autenticação ativado
+2025-08-13 14:56:02,674 - main - INFO - Sistema de autenticação ativado
+INFO:     Started server process [7217]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     127.0.0.1:64903 - "GET /health HTTP/1.1" 200 OK
-2025-07-31 17:40:29,355 - rcs_client - INFO - Enviando requisição para https://pointer-rcs-api-node.pontaltech.com.br/api/v3/single
-2025-07-31 17:40:29,476 - httpx - INFO - HTTP Request: POST https://pointer-rcs-api-node.pontaltech.com.br/api/v3/single "HTTP/1.1 400 Bad Request"
-2025-07-31 17:40:29,477 - rcs_client - ERROR - Erro HTTP 400: {"message":"Template not found"}
-2025-07-31 17:40:29,477 - services - ERROR - Erro ao enviar mensagem 1: Erro na API RCS: 400 - {"message":"Template not found"}
-INFO:     127.0.0.1:64906 - "POST /api/rcs/single HTTP/1.1" 200 OK
-2025-07-31 17:41:02,816 - main - INFO - Callback recebido: {'event': 'delivered', 'message_id': 1, 'phone_number': '5516982089942', 'status': 'success', 'timestamp': '2025-07-31T20:41:02.783696Z'}
-2025-07-31 17:41:02,851 - main - INFO - Callback processado: delivered para 5516982089942
-INFO:     127.0.0.1:64911 - "POST /api/rcs/callback HTTP/1.1" 200 OK
-2025-07-31 17:41:16,463 - main - INFO - Callback recebido: {'event': 'read', 'message_id': 1, 'phone_number': '5516982089942', 'status': 'success', 'timestamp': '2025-07-31T20:41:16.439884Z'}
-2025-07-31 17:41:16,481 - main - INFO - Callback processado: read para 5516982089942
-INFO:     127.0.0.1:64913 - "POST /api/rcs/callback HTTP/1.1" 200 OK
-2025-07-31 17:42:20,141 - main - INFO - Callback recebido: {'event': 'opened', 'message_id': 1, 'phone_number': '5516982089942', 'status': 'success', 'timestamp': '2025-07-31T20:42:20.117601Z', 'user_agent': 'Mozilla/5.0 (Android 12; Mobile; RCS)', 'device_info': {'platform': 'Android', 'version': '12', 'device': 'Samsung Galaxy S21'}}
-2025-07-31 17:42:20,165 - main - INFO - Callback processado: opened para 5516982089942
-INFO:     127.0.0.1:64925 - "POST /api/rcs/callback HTTP/1.1" 200 OK
-2025-07-31 17:43:15,876 - main - INFO - Callback recebido: {'event': 'clicked', 'message_id': 1, 'phone_number': '5516982089942', 'button_value': 'Ver Produtos', 'interaction_type': 'button_click', 'timestamp': '2025-07-31T20:43:15.856626Z'}
-2025-07-31 17:43:15,888 - main - INFO - Callback processado: clicked para 5516982089942
-INFO:     127.0.0.1:64934 - "POST /api/rcs/callback HTTP/1.1" 200 OK
-2025-07-31 17:43:59,586 - main - INFO - Callback recebido: {'event': 'replied', 'message_id': 1, 'phone_number': '5516982089942', 'reply_text': 'Muito interessante! Quero saber mais.', 'interaction_type': 'reply', 'timestamp': '2025-07-31T20:43:59.566484Z'}
-2025-07-31 17:43:59,598 - main - INFO - Callback processado: replied para 5516982089942
-INFO:     127.0.0.1:64942 - "POST /api/rcs/callback HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64944 - "GET /api/messages/1/stats HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64946 - "GET /api/messages/1/events HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64950 - "GET /api/events HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64954 - "GET /api/accounts/15885/summary HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64971 - "GET /api/messages HTTP/1.1" 200 OK
-2025-07-31 17:48:56,573 - rcs_client - INFO - Enviando requisição para https://pointer-rcs-api-node.pontaltech.com.br/api/v3/basic
-2025-07-31 17:48:56,685 - httpx - INFO - HTTP Request: POST https://pointer-rcs-api-node.pontaltech.com.br/api/v3/basic "HTTP/1.1 400 Bad Request"
-2025-07-31 17:48:56,685 - rcs_client - ERROR - Erro HTTP 400: {"error":{"type":"VALIDATION_ERROR","message":"agent not configured"}}
-2025-07-31 17:48:56,685 - services - ERROR - Erro ao enviar mensagem 2: Erro na API RCS: 400 - {"error":{"type":"VALIDATION_ERROR","message":"agent not configured"}}
-INFO:     127.0.0.1:64975 - "POST /api/rcs/basic HTTP/1.1" 200 OK
-2025-07-31 17:48:56,713 - rcs_client - INFO - Enviando requisição para https://pointer-rcs-api-node.pontaltech.com.br/api/v3/basic
-2025-07-31 17:48:56,802 - httpx - INFO - HTTP Request: POST https://pointer-rcs-api-node.pontaltech.com.br/api/v3/basic "HTTP/1.1 400 Bad Request"
-2025-07-31 17:48:56,803 - rcs_client - ERROR - Erro HTTP 400: {"error":{"type":"VALIDATION_ERROR","message":"text is missing"}}
-2025-07-31 17:48:56,803 - services - ERROR - Erro ao enviar mensagem 3: Erro na API RCS: 400 - {"error":{"type":"VALIDATION_ERROR","message":"text is missing"}}
-INFO:     127.0.0.1:64975 - "POST /api/rcs/basic HTTP/1.1" 200 OK
-2025-07-31 17:48:56,824 - rcs_client - INFO - Enviando requisição para https://pointer-rcs-api-node.pontaltech.com.br/api/v3/basic
-2025-07-31 17:48:56,914 - httpx - INFO - HTTP Request: POST https://pointer-rcs-api-node.pontaltech.com.br/api/v3/basic "HTTP/1.1 400 Bad Request"
-2025-07-31 17:48:56,914 - rcs_client - ERROR - Erro HTTP 400: {"error":{"type":"VALIDATION_ERROR","message":"agent not configured"}}
-2025-07-31 17:48:56,914 - services - ERROR - Erro ao enviar mensagem 4: Erro na API RCS: 400 - {"error":{"type":"VALIDATION_ERROR","message":"agent not configured"}}
-INFO:     127.0.0.1:64975 - "POST /api/rcs/basic HTTP/1.1" 200 OK
-2025-07-31 17:50:19,562 - main - INFO - Callback recebido: {'event': 'delivered', 'message_id': 2, 'phone_number': '5511999999999', 'timestamp': '2025-07-31T20:50:19.557179Z', 'status': 'success'}
-2025-07-31 17:50:19,573 - main - INFO - Callback processado: delivered para 5511999999999
-INFO:     127.0.0.1:64985 - "POST /api/rcs/callback HTTP/1.1" 200 OK
-2025-07-31 17:50:20,079 - main - INFO - Callback recebido: {'event': 'delivered', 'message_id': 3, 'phone_number': '5511888888888', 'timestamp': '2025-07-31T20:50:20.075959Z', 'status': 'success'}
-2025-07-31 17:50:20,090 - main - INFO - Callback processado: delivered para 5511888888888
-INFO:     127.0.0.1:64985 - "POST /api/rcs/callback HTTP/1.1" 200 OK
-2025-07-31 17:50:20,595 - main - INFO - Callback recebido: {'event': 'read', 'message_id': 3, 'phone_number': '5511888888888', 'timestamp': '2025-07-31T20:50:20.593987Z', 'status': 'success'}
-2025-07-31 17:50:20,599 - main - INFO - Callback processado: read para 5511888888888
-INFO:     127.0.0.1:64985 - "POST /api/rcs/callback HTTP/1.1" 200 OK
-2025-07-31 17:50:21,102 - main - INFO - Callback recebido: {'event': 'delivered', 'message_id': 4, 'phone_number': '5511777777777', 'timestamp': '2025-07-31T20:50:21.101714Z', 'status': 'success'}
-2025-07-31 17:50:21,107 - main - INFO - Callback processado: delivered para 5511777777777
-INFO:     127.0.0.1:64985 - "POST /api/rcs/callback HTTP/1.1" 200 OK
-2025-07-31 17:50:21,609 - main - INFO - Callback recebido: {'event': 'read', 'message_id': 4, 'phone_number': '5511777777777', 'timestamp': '2025-07-31T20:50:21.608241Z', 'status': 'success'}
-2025-07-31 17:50:21,614 - main - INFO - Callback processado: read para 5511777777777
-INFO:     127.0.0.1:64985 - "POST /api/rcs/callback HTTP/1.1" 200 OK
-2025-07-31 17:50:22,117 - main - INFO - Callback recebido: {'event': 'clicked', 'message_id': 4, 'phone_number': '5511777777777', 'button_value': 'Saiba Mais', 'timestamp': '2025-07-31T20:50:22.117064Z', 'status': 'success'}
-2025-07-31 17:50:22,124 - main - INFO - Callback processado: clicked para 5511777777777
-INFO:     127.0.0.1:64985 - "POST /api/rcs/callback HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64990 - "GET /api/messages HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64995 - "GET /api/messages?status=delivered HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64999 - "GET /api/messages?status=read HTTP/1.1" 200 OK
-INFO:     127.0.0.1:65009 - "GET /api/messages?limit=2 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:65014 - "GET /api/messages?skip=2&limit=2 HTTP/1.1" 200 OK
-WARNING:  StatReload detected changes in 'test_all_templates.py'. Reloading...
+2025-08-13 14:56:08,388 - main - INFO - Requisição flexível recebida: {'phone': '11999999999', 'message': 'Teste Postman'}
+2025-08-13 14:56:08,388 - main - INFO - Dados mapeados: {'campaign_name': 'API_Gateway', 'account': '2992', 'messages': [{'number': '5511999999999', 'vars': {}}], 'content': {'text': {'message': 'Teste Postman'}}, 'callback': None, 'fallback': [{'channel': 'SMS', 'content': 'Teste Postman'}]}
+2025-08-13 14:56:08,425 - rcs_client - INFO - Enviando requisição para https://pointer-rcs-api-node.pontaltech.com.br/api/v3/basic
+2025-08-13 14:56:08,733 - httpx - INFO - HTTP Request: POST https://pointer-rcs-api-node.pontaltech.com.br/api/v3/basic "HTTP/1.1 400 Bad Request"
+2025-08-13 14:56:08,734 - rcs_client - ERROR - Erro HTTP 400: {"error":{"type":"VALIDATION_ERROR","message":"account does not exists"}}
+2025-08-13 14:56:08,734 - services - ERROR - Erro ao enviar mensagem 22: Erro na API RCS: 400 - {"error":{"type":"VALIDATION_ERROR","message":"account does not exists"}}
+✅ Tabelas de autenticação importadas
+✅ Tabelas de autenticação importadas
+INFO:     127.0.0.1:58173 - "POST /api/send HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58176 - "GET /health HTTP/1.1" 200 OK
+2025-08-13 14:56:19,224 - rcs_client - INFO - Enviando requisição para https://pointer-rcs-api-node.pontaltech.com.br/api/v3/basic
+2025-08-13 14:56:19,364 - httpx - INFO - HTTP Request: POST https://pointer-rcs-api-node.pontaltech.com.br/api/v3/basic "HTTP/1.1 200 OK"
+2025-08-13 14:56:19,365 - rcs_client - INFO - Resposta da API: {'validMessages': [{'number': '5511999999999', 'id': '942d28f5-bc4b-4b9f-bbb4-ff3ce0a911a0'}], 'invalidMessages': []}
+INFO:     127.0.0.1:58179 - "POST /api/client/send-message HTTP/1.1" 500 Internal Server Error
+WARNING:  StatReload detected changes in 'client_service.py'. Reloading...
 INFO:     Shutting down
 INFO:     Waiting for application shutdown.
 INFO:     Application shutdown complete.
-INFO:     Finished server process [4893]
-Traceback (most recent call last):
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 145, in __init__
-    self._dbapi_connection = engine.raw_connection()
-                             ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3292, in raw_connection
-    return self.pool.connect()
-           ^^^^^^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 452, in connect
-    return _ConnectionFairy._checkout(self)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1269, in _checkout
-    fairy = _ConnectionRecord.checkout(pool)
-            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 716, in checkout
-    rec = pool._do_get()
-          ^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 169, in _do_get
-    with util.safe_reraise():
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
-    raise exc_value.with_traceback(exc_tb)
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 167, in _do_get
-    return self._create_connection()
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 393, in _create_connection
-    return _ConnectionRecord(self)
-           ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 678, in __init__
-    self.__connect()
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 902, in __connect
-    with util.safe_reraise():
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
-    raise exc_value.with_traceback(exc_tb)
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 898, in __connect
-    self.dbapi_connection = connection = pool._invoke_creator(self)
-                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 637, in connect
-    return dialect.connect(*cargs, **cparams)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 616, in connect
-    return self.loaded_dbapi.connect(*cargs, **cparams)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/psycopg2/__init__.py", line 122, in connect
-    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-psycopg2.OperationalError: connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused
-	Is the server running on that host and accepting TCP/IP connections?
-connection to server at "localhost" (::1), port 5432 failed: Connection refused
-	Is the server running on that host and accepting TCP/IP connections?
-
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "<string>", line 1, in <module>
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/multiprocessing/spawn.py", line 122, in spawn_main
-    exitcode = _main(fd, parent_sentinel)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/multiprocessing/spawn.py", line 131, in _main
-    prepare(preparation_data)
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/multiprocessing/spawn.py", line 246, in prepare
-    _fixup_main_from_path(data['init_main_from_path'])
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/multiprocessing/spawn.py", line 297, in _fixup_main_from_path
-    main_content = runpy.run_path(main_path,
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "<frozen runpy>", line 286, in run_path
-  File "<frozen runpy>", line 98, in _run_module_code
-  File "<frozen runpy>", line 88, in _run_code
-  File "/Users/jeanpires/GitHub/RCSIntegra/main.py", line 22, in <module>
-    create_tables()
-  File "/Users/jeanpires/GitHub/RCSIntegra/database.py", line 25, in create_tables
-    Base.metadata.create_all(bind=engine)
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/sql/schema.py", line 5828, in create_all
-    bind._run_ddl_visitor(
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3242, in _run_ddl_visitor
-    with self.begin() as conn:
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py", line 137, in __enter__
-    return next(self.gen)
-           ^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3232, in begin
-    with self.connect() as conn:
-         ^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3268, in connect
-    return self._connection_cls(self)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 147, in __init__
-    Connection._handle_dbapi_exception_noconnection(
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2430, in _handle_dbapi_exception_noconnection
-    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 145, in __init__
-    self._dbapi_connection = engine.raw_connection()
-                             ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3292, in raw_connection
-    return self.pool.connect()
-           ^^^^^^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 452, in connect
-    return _ConnectionFairy._checkout(self)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1269, in _checkout
-    fairy = _ConnectionRecord.checkout(pool)
-            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 716, in checkout
-    rec = pool._do_get()
-          ^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 169, in _do_get
-    with util.safe_reraise():
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
-    raise exc_value.with_traceback(exc_tb)
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 167, in _do_get
-    return self._create_connection()
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 393, in _create_connection
-    return _ConnectionRecord(self)
-           ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 678, in __init__
-    self.__connect()
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 902, in __connect
-    with util.safe_reraise():
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
-    raise exc_value.with_traceback(exc_tb)
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 898, in __connect
-    self.dbapi_connection = connection = pool._invoke_creator(self)
-                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 637, in connect
-    return dialect.connect(*cargs, **cparams)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 616, in connect
-    return self.loaded_dbapi.connect(*cargs, **cparams)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/psycopg2/__init__.py", line 122, in connect
-    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused
-	Is the server running on that host and accepting TCP/IP connections?
-connection to server at "localhost" (::1), port 5432 failed: Connection refused
-	Is the server running on that host and accepting TCP/IP connections?
-
-(Background on this error at: https://sqlalche.me/e/20/e3q8)
-INFO:     Stopping reloader process [4891]
+INFO:     Finished server process [7217]
+2025-08-13 14:56:51,548 - __mp_main__ - INFO - Sistema de autenticação ativado
+2025-08-13 14:56:51,581 - main - INFO - Sistema de autenticação ativado
+INFO:     Started server process [7254]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'client_service.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [7254]
+✅ Tabelas de autenticação importadas
+✅ Tabelas de autenticação importadas
+2025-08-13 14:57:05,522 - __mp_main__ - INFO - Sistema de autenticação ativado
+2025-08-13 14:57:05,555 - main - INFO - Sistema de autenticação ativado
+INFO:     Started server process [7269]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+2025-08-13 14:57:20,716 - rcs_client - INFO - Enviando requisição para https://pointer-rcs-api-node.pontaltech.com.br/api/v3/basic
+2025-08-13 14:57:20,819 - httpx - INFO - HTTP Request: POST https://pointer-rcs-api-node.pontaltech.com.br/api/v3/basic "HTTP/1.1 200 OK"
+2025-08-13 14:57:20,819 - rcs_client - INFO - Resposta da API: {'validMessages': [{'number': '5511999999999', 'id': '50ede130-c75c-4b87-96ff-988d3536bb8d'}], 'invalidMessages': []}
+✅ Tabelas de autenticação importadas
+✅ Tabelas de autenticação importadas
+INFO:     127.0.0.1:58188 - "POST /api/client/send-message HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58193 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58195 - "GET /api/info HTTP/1.1" 404 Not Found
+2025-08-13 14:57:26,533 - rcs_client - INFO - Enviando requisição para https://pointer-rcs-api-node.pontaltech.com.br/api/v3/basic
+2025-08-13 14:57:26,697 - httpx - INFO - HTTP Request: POST https://pointer-rcs-api-node.pontaltech.com.br/api/v3/basic "HTTP/1.1 200 OK"
+2025-08-13 14:57:26,698 - rcs_client - INFO - Resposta da API: {'validMessages': [{'number': '5511999999999', 'id': 'b1e3187e-8aa8-4558-948d-3255ccbb38ed'}], 'invalidMessages': []}
+INFO:     127.0.0.1:58197 - "POST /api/client/send-message HTTP/1.1" 200 OK
+2025-08-13 14:57:27,752 - rcs_client - INFO - Enviando requisição para https://pointer-rcs-api-node.pontaltech.com.br/api/v3/single
+2025-08-13 14:57:27,896 - httpx - INFO - HTTP Request: POST https://pointer-rcs-api-node.pontaltech.com.br/api/v3/single "HTTP/1.1 400 Bad Request"
+2025-08-13 14:57:27,897 - rcs_client - ERROR - Erro HTTP 400: {"error":{"type":"VALIDATION_ERROR","message":"agent not configured"}}
+2025-08-13 14:57:27,897 - services - ERROR - Erro ao enviar mensagem 26: Erro na API RCS: 400 - {"error":{"type":"VALIDATION_ERROR","message":"agent not configured"}}
+INFO:     127.0.0.1:58200 - "POST /api/client/send-message HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58203 - "GET /api/client/messages?client_code=CLI_7FB141C8&limit=10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58205 - "GET /api/client/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58207 - "POST /api/client/send-message HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:58209 - "POST /api/client/send-message HTTP/1.1" 403 Forbidden
+2025-08-13 14:58:43,690 - rcs_client - INFO - Enviando requisição para https://pointer-rcs-api-node.pontaltech.com.br/api/v3/basic
+2025-08-13 14:58:44,051 - httpx - INFO - HTTP Request: POST https://pointer-rcs-api-node.pontaltech.com.br/api/v3/basic "HTTP/1.1 200 OK"
+2025-08-13 14:58:44,052 - rcs_client - INFO - Resposta da API: {'validMessages': [{'number': '5511998637834', 'id': '445d297d-87e8-47a7-881f-57d6916516b2'}], 'invalidMessages': []}
+INFO:     127.0.0.1:58221 - "POST /api/client/send-message HTTP/1.1" 200 OK
+2025-08-13 15:05:47,030 - rcs_client - INFO - Enviando requisição para https://pointer-rcs-api-node.pontaltech.com.br/api/v3/basic
+2025-08-13 15:05:47,267 - httpx - INFO - HTTP Request: POST https://pointer-rcs-api-node.pontaltech.com.br/api/v3/basic "HTTP/1.1 400 Bad Request"
+2025-08-13 15:05:47,267 - rcs_client - ERROR - Erro HTTP 400: {"error":{"type":"VALIDATION_ERROR","message":"account does not exists"}}
+2025-08-13 15:05:47,267 - services - ERROR - Erro ao enviar mensagem 28: Erro na API RCS: 400 - {"error":{"type":"VALIDATION_ERROR","message":"account does not exists"}}
+INFO:     127.0.0.1:58331 - "POST /api/send/simple?phone=16982089942&message=Ol%C3%A1!%20Teste%20super%20simples HTTP/1.1" 200 OK
+2025-08-13 15:06:02,261 - main - INFO - Requisição flexível recebida: {'phone': '16982089942', 'message': 'Olá! Esta é uma mensagem de teste no formato simples.', 'campaign': 'Teste Postman', 'variables': {'nome': 'Cliente', 'produto': 'Teste'}}
+2025-08-13 15:06:02,261 - main - INFO - Dados mapeados: {'campaign_name': 'Teste Postman', 'account': '2992', 'messages': [{'number': '5516982089942', 'vars': {'nome': 'Cliente', 'produto': 'Teste'}}], 'content': {'text': {'message': 'Olá! Esta é uma mensagem de teste no formato simples.'}}, 'callback': None, 'fallback': [{'channel': 'SMS', 'content': 'Ola! Esta e uma mensagem de teste no formato simples.'}]}
+2025-08-13 15:06:02,291 - rcs_client - INFO - Enviando requisição para https://pointer-rcs-api-node.pontaltech.com.br/api/v3/basic
+2025-08-13 15:06:02,392 - httpx - INFO - HTTP Request: POST https://pointer-rcs-api-node.pontaltech.com.br/api/v3/basic "HTTP/1.1 400 Bad Request"
+2025-08-13 15:06:02,393 - rcs_client - ERROR - Erro HTTP 400: {"error":{"type":"VALIDATION_ERROR","message":"account does not exists"}}
+2025-08-13 15:06:02,393 - services - ERROR - Erro ao enviar mensagem 29: Erro na API RCS: 400 - {"error":{"type":"VALIDATION_ERROR","message":"account does not exists"}}
+INFO:     127.0.0.1:58344 - "POST /api/send HTTP/1.1" 200 OK
+2025-08-13 15:06:14,915 - main - INFO - Requisição flexível recebida: {'to': '16982089942', 'template': 'welcome', 'variables': {'name': 'João', 'product': 'Smartphone', 'company': 'Sua Empresa'}, 'campaign': 'Template Campaign'}
+2025-08-13 15:06:14,915 - main - INFO - Dados mapeados: {'campaign_name': 'Template Campaign', 'account': '2992', 'messages': [{'number': '5516982089942', 'vars': {'name': 'João', 'product': 'Smartphone', 'company': 'Sua Empresa'}}], 'content': {'text': {'message': 'Template: welcome'}}, 'callback': None, 'fallback': [{'channel': 'SMS', 'content': 'Template: welcome'}]}
+2025-08-13 15:06:14,936 - rcs_client - INFO - Enviando requisição para https://pointer-rcs-api-node.pontaltech.com.br/api/v3/basic
+2025-08-13 15:06:15,037 - httpx - INFO - HTTP Request: POST https://pointer-rcs-api-node.pontaltech.com.br/api/v3/basic "HTTP/1.1 400 Bad Request"
+2025-08-13 15:06:15,038 - rcs_client - ERROR - Erro HTTP 400: {"error":{"type":"VALIDATION_ERROR","message":"account does not exists"}}
+2025-08-13 15:06:15,038 - services - ERROR - Erro ao enviar mensagem 30: Erro na API RCS: 400 - {"error":{"type":"VALIDATION_ERROR","message":"account does not exists"}}
+INFO:     127.0.0.1:58359 - "POST /api/send HTTP/1.1" 200 OK

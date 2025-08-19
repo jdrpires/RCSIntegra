@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Teste RCS Single usando template da plataforma PontalTech
+Teste RCS Single usando template da plataforma Eugen
 """
 
 import httpx
@@ -13,7 +13,7 @@ async def test_rcs_single_with_template():
     """Testa RCS Single usando template_id da plataforma"""
     print("🎯 Testando RCS Single com Template da Plataforma\n")
     
-    # IMPORTANTE: Substitua pelo template_id real da sua conta PontalTech
+    # IMPORTANTE: Substitua pelo template_id real da sua conta Eugen
     template_tests = [
         {
             "name": "Template Básico",
@@ -151,16 +151,16 @@ async def main():
     print()
     
     print("⚠️  IMPORTANTE:")
-    print("   1. Você precisa ter templates criados na plataforma PontalTech")
+    print("   1. Você precisa ter templates criados na plataforma Eugen")
     print("   2. Substitua 'SEU_TEMPLATE_ID_AQUI' pelos IDs reais")
-    print("   3. Acesse a plataforma PontalTech para ver seus template_ids")
+    print("   3. Acesse a plataforma Eugen para ver seus template_ids")
     print("   4. As variáveis devem corresponder às definidas no template")
     print()
     
     confirm = input("Você já configurou os template_ids reais? (s/N): ")
     if confirm.lower() != 's':
         print("\n📋 Próximos passos:")
-        print("1. Acesse a plataforma PontalTech")
+        print("1. Acesse a plataforma Eugen")
         print("2. Vá na seção de Templates")
         print("3. Copie os IDs dos templates que quer usar")
         print("4. Edite o arquivo test_rcs_template.py")

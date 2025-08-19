@@ -1,523 +1,10 @@
 {
 	"info": {
 		"_postman_id": "rcs-gateway-api-collection",
-		"name": "RCS Gateway API - PontalTech Integration",
-		"description": "Collection completa para testar a API RCS Gateway integrada com PontalTech.\n\n**Configuração:**\n1. Configure as variáveis de ambiente no Postman\n2. Ajuste o número de telefone de destino\n3. Configure o account ID da sua conta\n\n**Funcionalidades:**\n- ✅ RCS Basic (mensagens simples)\n- ✅ RCS Single (Rich Cards, Carousel)\n- ✅ RCS Conversacional (Webhook)\n- ✅ Templates (criar e usar)\n- ✅ Consultas e relatórios\n\n**Modo Simulação:**\nA API está configurada em modo simulação para testes sem IP liberado.",
+		"name": "RCS Gateway API - Local Testing",
+		"description": "Collection completa para testar todas as funcionalidades da API RCS Gateway localmente",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
-	"item": [
-		{
-			"name": "🏠 Health Check",
-			"item": [
-				{
-					"name": "Status da API",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/",
-							"host": ["{{base_url}}"],
-							"path": [""]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Health Check",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/health",
-							"host": ["{{base_url}}"],
-							"path": ["health"]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "📱 RCS Basic",
-			"item": [
-				{
-					"name": "Mensagem Texto Simples",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"campaign_name\": \"Campanha Teste Texto\",\n  \"account\": \"{{account_id}}\",\n  \"messages\": [\n    {\n      \"number\": \"{{phone_number}}\",\n      \"vars\": {\n        \"nome\": \"João Silva\",\n        \"produto\": \"Smartphone XYZ\",\n        \"preco\": \"R$ 1.299,00\"\n      }\n    }\n  ],\n  \"content\": {\n    \"text\": {\n      \"message\": \"Olá {{nome}}! Seu {{produto}} está disponível por {{preco}}. Aproveite!\"\n    }\n  },\n  \"callback\": \"https://webhook.exemplo.com/callback\",\n  \"fallback\": [\n    {\n      \"channel\": \"SMS\",\n      \"content\": \"Ola {{nome}}! Seu {{produto}} esta disponivel por {{preco}}. Aproveite!\"\n    }\n  ]\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/rcs/basic",
-							"host": ["{{base_url}}"],
-							"path": ["api", "rcs", "basic"]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Mensagem com Imagem",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"campaign_name\": \"Campanha Imagem\",\n  \"account\": \"{{account_id}}\",\n  \"messages\": [\n    {\n      \"number\": \"{{phone_number}}\",\n      \"vars\": {\n        \"nome\": \"Maria\",\n        \"desconto\": \"30\"\n      }\n    }\n  ],\n  \"content\": {\n    \"image\": {\n      \"fileUrl\": \"https://picsum.photos/600/400\",\n      \"message\": \"🎉 Olá {{nome}}! {{desconto}}% de desconto especial para você!\"\n    }\n  },\n  \"callback\": \"https://webhook.exemplo.com/callback\"\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/rcs/basic",
-							"host": ["{{base_url}}"],
-							"path": ["api", "rcs", "basic"]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "🎨 RCS Single (Rich Content)",
-			"item": [
-				{
-					"name": "Rich Card com Botões",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"account\": \"{{account_id}}\",\n  \"messages\": [\n    {\n      \"number\": \"{{phone_number}}\"\n    }\n  ],\n  \"content\": {\n    \"richCard\": {\n      \"title\": \"🎉 Oferta Especial!\",\n      \"description\": \"Aproveite 25% de desconto em todos os smartphones. Oferta válida até o final do mês!\",\n      \"fileUrl\": \"https://picsum.photos/600/400?random=1\",\n      \"suggestions\": [\n        {\n          \"type\": \"openUrl\",\n          \"title\": \"Ver Produtos\",\n          \"value\": \"https://loja.exemplo.com/smartphones\"\n        },\n        {\n          \"type\": \"call\",\n          \"title\": \"Ligar Agora\",\n          \"value\": \"1140001234\"\n        },\n        {\n          \"type\": \"reply\",\n          \"title\": \"Tenho Interesse\",\n          \"value\": \"interesse_smartphones\"\n        }\n      ]\n    }\n  }\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/rcs/single",
-							"host": ["{{base_url}}"],
-							"path": ["api", "rcs", "single"]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Carousel de Produtos",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"account\": \"{{account_id}}\",\n  \"messages\": [\n    {\n      \"number\": \"{{phone_number}}\"\n    }\n  ],\n  \"content\": {\n    \"carousel\": {\n      \"cards\": [\n        {\n          \"title\": \"iPhone 15 Pro\",\n          \"description\": \"O mais avançado iPhone com chip A17 Pro e câmera de 48MP.\",\n          \"fileUrl\": \"https://picsum.photos/400/300?random=2\",\n          \"suggestions\": [\n            {\n              \"type\": \"openUrl\",\n              \"title\": \"Comprar\",\n              \"value\": \"https://loja.exemplo.com/iphone15\"\n            },\n            {\n              \"type\": \"reply\",\n              \"title\": \"Mais Info\",\n              \"value\": \"info_iphone15\"\n            }\n          ]\n        },\n        {\n          \"title\": \"Samsung Galaxy S24\",\n          \"description\": \"Galaxy AI revolucionário com câmera de 200MP e tela Dynamic AMOLED.\",\n          \"fileUrl\": \"https://picsum.photos/400/300?random=3\",\n          \"suggestions\": [\n            {\n              \"type\": \"openUrl\",\n              \"title\": \"Comprar\",\n              \"value\": \"https://loja.exemplo.com/galaxy-s24\"\n            },\n            {\n              \"type\": \"reply\",\n              \"title\": \"Mais Info\",\n              \"value\": \"info_galaxy_s24\"\n            }\n          ]\n        },\n        {\n          \"title\": \"Xiaomi 14 Ultra\",\n          \"description\": \"Fotografia profissional com lentes Leica e Snapdragon 8 Gen 3.\",\n          \"fileUrl\": \"https://picsum.photos/400/300?random=4\",\n          \"suggestions\": [\n            {\n              \"type\": \"openUrl\",\n              \"title\": \"Comprar\",\n              \"value\": \"https://loja.exemplo.com/xiaomi-14\"\n            },\n            {\n              \"type\": \"reply\",\n              \"title\": \"Mais Info\",\n              \"value\": \"info_xiaomi_14\"\n            }\n          ]\n        }\n      ]\n    }\n  }\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/rcs/single",
-							"host": ["{{base_url}}"],
-							"path": ["api", "rcs", "single"]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Mensagem com Sugestões",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"account\": \"{{account_id}}\",\n  \"messages\": [\n    {\n      \"number\": \"{{phone_number}}\"\n    }\n  ],\n  \"content\": {\n    \"suggestion\": {\n      \"message\": \"Como posso ajudá-lo hoje? Escolha uma das opções abaixo:\",\n      \"suggestions\": [\n        {\n          \"type\": \"reply\",\n          \"title\": \"Ver Produtos\",\n          \"value\": \"produtos\"\n        },\n        {\n          \"type\": \"reply\",\n          \"title\": \"Suporte\",\n          \"value\": \"suporte\"\n        },\n        {\n          \"type\": \"reply\",\n          \"title\": \"Promoções\",\n          \"value\": \"promocoes\"\n        },\n        {\n          \"type\": \"call\",\n          \"title\": \"Ligar\",\n          \"value\": \"1140001234\"\n        }\n      ]\n    }\n  }\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/rcs/single",
-							"host": ["{{base_url}}"],
-							"path": ["api", "rcs", "single"]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "🤖 RCS Conversacional",
-			"item": [
-				{
-					"name": "Mensagem com Webhook",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"account\": \"{{account_id}}\",\n  \"webhook\": \"https://webhook.exemplo.com/rcs-responses\",\n  \"messages\": [\n    {\n      \"number\": \"{{phone_number}}\"\n    }\n  ],\n  \"content\": {\n    \"text\": {\n      \"message\": \"Olá! Sou seu assistente virtual. Como posso ajudá-lo hoje? Digite sua dúvida ou escolha uma opção.\"\n    }\n  }\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/rcs/webhook",
-							"host": ["{{base_url}}"],
-							"path": ["api", "rcs", "webhook"]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Conversação com Rich Card",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"account\": \"{{account_id}}\",\n  \"webhook\": \"https://webhook.exemplo.com/rcs-responses\",\n  \"messages\": [\n    {\n      \"number\": \"{{phone_number}}\"\n    }\n  ],\n  \"content\": {\n    \"richCard\": {\n      \"title\": \"🛍️ Central de Atendimento\",\n      \"description\": \"Escolha como deseja ser atendido. Nossa equipe está pronta para ajudar!\",\n      \"fileUrl\": \"https://picsum.photos/600/400?random=5\",\n      \"suggestions\": [\n        {\n          \"type\": \"reply\",\n          \"title\": \"Falar com Vendedor\",\n          \"value\": \"vendedor\"\n        },\n        {\n          \"type\": \"reply\",\n          \"title\": \"Suporte Técnico\",\n          \"value\": \"suporte\"\n        },\n        {\n          \"type\": \"reply\",\n          \"title\": \"Financeiro\",\n          \"value\": \"financeiro\"\n        },\n        {\n          \"type\": \"call\",\n          \"title\": \"Ligar Direto\",\n          \"value\": \"1140001234\"\n        }\n      ]\n    }\n  }\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/rcs/webhook",
-							"host": ["{{base_url}}"],
-							"path": ["api", "rcs", "webhook"]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "📝 Templates",
-			"item": [
-				{
-					"name": "Criar Template Texto",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"name\": \"Boas Vindas Personalizado\",\n  \"account\": \"{{account_id}}\",\n  \"content_type\": \"text\",\n  \"template_data\": {\n    \"message\": \"🎉 Olá {{nome}}! Bem-vindo à {{empresa}}. Seu código de acesso é: {{codigo}}. Aproveite {{desconto}}% de desconto na primeira compra!\"\n  }\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/rcs/templates",
-							"host": ["{{base_url}}"],
-							"path": ["api", "rcs", "templates"]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Criar Template Rich Card",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"name\": \"Promoção Produto\",\n  \"account\": \"{{account_id}}\",\n  \"content_type\": \"richCard\",\n  \"template_data\": {\n    \"title\": \"🔥 {{produto}} em Promoção!\",\n    \"description\": \"Aproveite {{desconto}}% OFF no {{produto}} por apenas {{preco}}! Oferta válida até {{data_limite}}.\",\n    \"fileUrl\": \"{{imagem_produto}}\",\n    \"suggestions\": [\n      {\n        \"type\": \"openUrl\",\n        \"title\": \"Comprar Agora\",\n        \"value\": \"{{link_compra}}\"\n      },\n      {\n        \"type\": \"call\",\n        \"title\": \"Falar com Vendedor\",\n        \"value\": \"{{telefone_vendas}}\"\n      },\n      {\n        \"type\": \"reply\",\n        \"title\": \"Mais Informações\",\n        \"value\": \"info_{{produto_id}}\"\n      }\n    ]\n  }\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/rcs/templates",
-							"host": ["{{base_url}}"],
-							"path": ["api", "rcs", "templates"]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Criar Template Carousel",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"name\": \"Catálogo Produtos\",\n  \"account\": \"{{account_id}}\",\n  \"content_type\": \"carousel\",\n  \"template_data\": {\n    \"cards\": [\n      {\n        \"title\": \"{{produto1_nome}}\",\n        \"description\": \"{{produto1_desc}} - Por apenas {{produto1_preco}}\",\n        \"fileUrl\": \"{{produto1_imagem}}\",\n        \"suggestions\": [\n          {\n            \"type\": \"openUrl\",\n            \"title\": \"Ver Detalhes\",\n            \"value\": \"{{produto1_link}}\"\n          }\n        ]\n      },\n      {\n        \"title\": \"{{produto2_nome}}\",\n        \"description\": \"{{produto2_desc}} - Por apenas {{produto2_preco}}\",\n        \"fileUrl\": \"{{produto2_imagem}}\",\n        \"suggestions\": [\n          {\n            \"type\": \"openUrl\",\n            \"title\": \"Ver Detalhes\",\n            \"value\": \"{{produto2_link}}\"\n          }\n        ]\n      },\n      {\n        \"title\": \"{{produto3_nome}}\",\n        \"description\": \"{{produto3_desc}} - Por apenas {{produto3_preco}}\",\n        \"fileUrl\": \"{{produto3_imagem}}\",\n        \"suggestions\": [\n          {\n            \"type\": \"openUrl\",\n            \"title\": \"Ver Detalhes\",\n            \"value\": \"{{produto3_link}}\"\n          }\n        ]\n      }\n    ]\n  }\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/rcs/templates",
-							"host": ["{{base_url}}"],
-							"path": ["api", "rcs", "templates"]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Listar Templates",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/api/templates",
-							"host": ["{{base_url}}"],
-							"path": ["api", "templates"]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Enviar Mensagem com Template",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"account\": \"{{account_id}}\",\n  \"webhook\": \"https://webhook.exemplo.com/rcs-template\",\n  \"template_id\": \"1\",\n  \"bot_id\": \"bot_{{account_id}}\",\n  \"messages\": [\n    {\n      \"number\": \"{{phone_number}}\",\n      \"vars\": {\n        \"nome\": \"Carlos Silva\",\n        \"empresa\": \"TechStore Premium\",\n        \"codigo\": \"TECH2025\",\n        \"desconto\": \"20\",\n        \"produto\": \"iPhone 15 Pro Max\",\n        \"preco\": \"R$ 8.999,00\",\n        \"data_limite\": \"31/12/2024\",\n        \"imagem_produto\": \"https://picsum.photos/600/400?random=6\",\n        \"link_compra\": \"https://loja.exemplo.com/iphone15-pro-max\",\n        \"telefone_vendas\": \"1140001234\",\n        \"produto_id\": \"iphone15promax\"\n      }\n    }\n  ]\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/rcs/template",
-							"host": ["{{base_url}}"],
-							"path": ["api", "rcs", "template"]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "📊 Consultas e Relatórios",
-			"item": [
-				{
-					"name": "Listar Mensagens",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/api/messages?skip=0&limit=50",
-							"host": ["{{base_url}}"],
-							"path": ["api", "messages"],
-							"query": [
-								{
-									"key": "skip",
-									"value": "0"
-								},
-								{
-									"key": "limit",
-									"value": "50"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Consultar Mensagem por ID",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/api/messages/1",
-							"host": ["{{base_url}}"],
-							"path": ["api", "messages", "1"]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Estatísticas da Mensagem",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/api/messages/1/stats",
-							"host": ["{{base_url}}"],
-							"path": ["api", "messages", "1", "stats"]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Eventos da Mensagem",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/api/messages/1/events",
-							"host": ["{{base_url}}"],
-							"path": ["api", "messages", "1", "events"]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Resumo por Account",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/api/accounts/{{account_id}}/summary",
-							"host": ["{{base_url}}"],
-							"path": ["api", "accounts", "{{account_id}}", "summary"]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Resumo por Campanha",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/api/campaigns/Campanha%20Teste/summary",
-							"host": ["{{base_url}}"],
-							"path": ["api", "campaigns", "Campanha Teste", "summary"]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "🔔 Callbacks",
-			"item": [
-				{
-					"name": "Simular Callback de Entrega",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"messageId\": \"msg_123456\",\n  \"status\": \"delivered\",\n  \"timestamp\": \"2025-01-15T10:30:00Z\",\n  \"phone\": \"5511999999999\",\n  \"account\": \"{{account_id}}\",\n  \"details\": {\n    \"deliveredAt\": \"2025-01-15T10:30:00Z\",\n    \"carrier\": \"Vivo\",\n    \"device\": \"RCS_CAPABLE\"\n  }\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/rcs/callback",
-							"host": ["{{base_url}}"],
-							"path": ["api", "rcs", "callback"]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Simular Callback de Resposta",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"messageId\": \"msg_123456\",\n  \"type\": \"response\",\n  \"timestamp\": \"2025-01-15T10:35:00Z\",\n  \"phone\": \"5511999999999\",\n  \"account\": \"{{account_id}}\",\n  \"response\": {\n    \"type\": \"text\",\n    \"content\": \"Tenho interesse no produto!\"\n  }\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/rcs/callback",
-							"host": ["{{base_url}}"],
-							"path": ["api", "rcs", "callback"]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "🌐 Templates da Plataforma",
-			"item": [
-				{
-					"name": "Listar Templates da Plataforma",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/api/platform/templates",
-							"host": ["{{base_url}}"],
-							"path": ["api", "platform", "templates"]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Buscar Template da Plataforma por ID",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/api/platform/templates/template_123",
-							"host": ["{{base_url}}"],
-							"path": ["api", "platform", "templates", "template_123"]
-						}
-					},
-					"response": []
-				}
-			]
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					"// Script executado antes de cada requisição",
-					"console.log('Executando requisição para:', pm.request.url.toString());"
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					"// Testes automáticos após cada requisição",
-					"pm.test('Status code é 200 ou 201', function () {",
-					"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
-					"});",
-					"",
-					"pm.test('Response time é menor que 5000ms', function () {",
-					"    pm.expect(pm.response.responseTime).to.be.below(5000);",
-					"});",
-					"",
-					"pm.test('Content-Type é JSON', function () {",
-					"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
-					"});"
-				]
-			}
-		}
-	],
 	"variable": [
 		{
 			"key": "base_url",
@@ -525,14 +12,387 @@
 			"type": "string"
 		},
 		{
-			"key": "account_id",
-			"value": "15885",
+			"key": "test_number",
+			"value": "5511999999999",
 			"type": "string"
 		},
 		{
-			"key": "phone_number",
-			"value": "5516982089942",
+			"key": "account_id",
+			"value": "sua_conta_id",
 			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "1. RCS Basic - Mensagem Simples",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"campaign_name\": \"Teste Mensagem Básica\",\n  \"account\": \"{{account_id}}\",\n  \"messages\": [\n    {\n      \"number\": \"{{test_number}}\",\n      \"vars\": {\n        \"nome\": \"João Silva\",\n        \"produto\": \"Smartphone Galaxy\",\n        \"desconto\": \"20%\"\n      }\n    }\n  ],\n  \"content\": {\n    \"text\": {\n      \"message\": \"Olá {{nome}}! Seu {{produto}} está disponível com {{desconto}} de desconto. Aproveite!\"\n    }\n  },\n  \"callback\": \"https://webhook.site/seu-webhook-aqui\",\n  \"fallback\": [\n    {\n      \"channel\": \"SMS\",\n      \"content\": \"Ola {{nome}}! Seu {{produto}} esta disponivel com {{desconto}} de desconto. Aproveite!\"\n    }\n  ]\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/rcs/basic",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"rcs",
+						"basic"
+					]
+				},
+				"description": "Envia mensagem RCS básica com fallback SMS. Ideal para campanhas em massa com personalização via variáveis."
+			}
+		},
+		{
+			"name": "2. RCS Single - Rich Card",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"account\": \"{{account_id}}\",\n  \"messages\": [\n    {\n      \"number\": \"{{test_number}}\"\n    }\n  ],\n  \"content\": {\n    \"richCard\": {\n      \"title\": \"🎉 Oferta Especial!\",\n      \"description\": \"Aproveite 50% de desconto em todos os smartphones. Oferta válida até o final do mês!\",\n      \"fileUrl\": \"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800\",\n      \"suggestions\": [\n        {\n          \"type\": \"openUrl\",\n          \"title\": \"🛒 Ver Produtos\",\n          \"value\": \"https://loja.exemplo.com/smartphones\"\n        },\n        {\n          \"type\": \"call\",\n          \"title\": \"📞 Ligar Agora\",\n          \"value\": \"1140001234\"\n        },\n        {\n          \"type\": \"reply\",\n          \"title\": \"ℹ️ Mais Info\",\n          \"value\": \"Quero mais informações sobre a promoção\"\n        }\n      ]\n    }\n  },\n  \"callback\": \"https://webhook.site/seu-webhook-aqui\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/rcs/single",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"rcs",
+						"single"
+					]
+				},
+				"description": "Envia Rich Card com imagem, título, descrição e botões interativos (URL, ligação, resposta)."
+			}
+		},
+		{
+			"name": "3. RCS Single - Carousel",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"account\": \"{{account_id}}\",\n  \"messages\": [\n    {\n      \"number\": \"{{test_number}}\"\n    }\n  ],\n  \"content\": {\n    \"carousel\": {\n      \"cards\": [\n        {\n          \"title\": \"📱 iPhone 15\",\n          \"description\": \"O mais novo iPhone com tecnologia avançada\",\n          \"fileUrl\": \"https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=800\",\n          \"suggestions\": [\n            {\n              \"type\": \"openUrl\",\n              \"title\": \"Ver Detalhes\",\n              \"value\": \"https://loja.exemplo.com/iphone15\"\n            }\n          ]\n        },\n        {\n          \"title\": \"📱 Samsung Galaxy S24\",\n          \"description\": \"Performance excepcional e câmera profissional\",\n          \"fileUrl\": \"https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=800\",\n          \"suggestions\": [\n            {\n              \"type\": \"openUrl\",\n              \"title\": \"Ver Detalhes\",\n              \"value\": \"https://loja.exemplo.com/galaxy-s24\"\n            }\n          ]\n        },\n        {\n          \"title\": \"📱 Xiaomi 14\",\n          \"description\": \"Melhor custo-benefício do mercado\",\n          \"fileUrl\": \"https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=800\",\n          \"suggestions\": [\n            {\n              \"type\": \"openUrl\",\n              \"title\": \"Ver Detalhes\",\n              \"value\": \"https://loja.exemplo.com/xiaomi14\"\n            }\n          ]\n        }\n      ]\n    }\n  },\n  \"callback\": \"https://webhook.site/seu-webhook-aqui\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/rcs/single",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"rcs",
+						"single"
+					]
+				},
+				"description": "Envia carousel com múltiplos cards deslizáveis, cada um com imagem e botões."
+			}
+		},
+		{
+			"name": "4. RCS Single - Imagem",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"account\": \"{{account_id}}\",\n  \"messages\": [\n    {\n      \"number\": \"{{test_number}}\"\n    }\n  ],\n  \"content\": {\n    \"image\": {\n      \"fileUrl\": \"https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200\",\n      \"message\": \"🏪 Confira nossa nova loja! Inauguração com descontos especiais.\"\n    }\n  },\n  \"callback\": \"https://webhook.site/seu-webhook-aqui\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/rcs/single",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"rcs",
+						"single"
+					]
+				},
+				"description": "Envia imagem com texto. Suporta JPEG, PNG e GIF até 2MB."
+			}
+		},
+		{
+			"name": "5. RCS Single - Vídeo",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"account\": \"{{account_id}}\",\n  \"messages\": [\n    {\n      \"number\": \"{{test_number}}\"\n    }\n  ],\n  \"content\": {\n    \"video\": {\n      \"fileUrl\": \"https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4\",\n      \"message\": \"🎥 Veja nosso novo produto em ação! Tecnologia inovadora que vai surpreender você.\"\n    }\n  },\n  \"callback\": \"https://webhook.site/seu-webhook-aqui\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/rcs/single",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"rcs",
+						"single"
+					]
+				},
+				"description": "Envia vídeo com texto. Suporta MP4 até 50MB via HTTPS."
+			}
+		},
+		{
+			"name": "6. RCS Webhook - Conversacional",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"account\": \"{{account_id}}\",\n  \"webhook\": \"https://webhook.site/seu-webhook-conversacional\",\n  \"messages\": [\n    {\n      \"number\": \"{{test_number}}\"\n    }\n  ],\n  \"content\": {\n    \"text\": {\n      \"message\": \"👋 Olá! Sou seu assistente virtual. Como posso ajudá-lo hoje?\\n\\n• Informações sobre produtos\\n• Suporte técnico\\n• Falar com atendente\"\n    }\n  }\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/rcs/webhook",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"rcs",
+						"webhook"
+					]
+				},
+				"description": "Inicia conversa RCS com webhook. Respostas do usuário serão enviadas para o webhook configurado."
+			}
+		},
+		{
+			"name": "7. Criar Template - Rich Card",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Template Boas Vindas\",\n  \"account\": \"{{account_id}}\",\n  \"content_type\": \"richCard\",\n  \"template_data\": {\n    \"title\": \"🎉 Bem-vindo {{nome}}!\",\n    \"description\": \"Obrigado por se cadastrar em nossa plataforma! Aproveite {{desconto}} de desconto na primeira compra.\",\n    \"fileUrl\": \"https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800\",\n    \"suggestions\": [\n      {\n        \"type\": \"openUrl\",\n        \"title\": \"🛒 Explorar Loja\",\n        \"value\": \"https://loja.exemplo.com\"\n      },\n      {\n        \"type\": \"reply\",\n        \"title\": \"🎁 Usar Desconto\",\n        \"value\": \"Quero usar meu desconto de boas-vindas\"\n      }\n    ]\n  }\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/rcs/templates",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"rcs",
+						"templates"
+					]
+				},
+				"description": "Cria template Rich Card reutilizável com variáveis dinâmicas."
+			}
+		},
+		{
+			"name": "8. Criar Template - Texto",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Template Cobrança\",\n  \"account\": \"{{account_id}}\",\n  \"content_type\": \"text\",\n  \"template_data\": {\n    \"message\": \"📋 Olá {{nome}},\\n\\nSua fatura de {{valor}} com vencimento em {{data_vencimento}} está disponível.\\n\\n💳 Pague até a data de vencimento e evite juros.\\n\\nDúvidas? Entre em contato conosco!\"\n  }\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/rcs/templates",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"rcs",
+						"templates"
+					]
+				},
+				"description": "Cria template de texto simples para mensagens de cobrança."
+			}
+		},
+		{
+			"name": "9. Listar Templates",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/rcs/templates?account={{account_id}}&skip=0&limit=10",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"rcs",
+						"templates"
+					],
+					"query": [
+						{
+							"key": "account",
+							"value": "{{account_id}}"
+						},
+						{
+							"key": "skip",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					]
+				},
+				"description": "Lista todos os templates criados, com filtros opcionais por conta."
+			}
+		},
+		{
+			"name": "10. Usar Template",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"template_id\": 1,\n  \"account\": \"{{account_id}}\",\n  \"messages\": [\n    {\n      \"number\": \"{{test_number}}\",\n      \"vars\": {\n        \"nome\": \"Maria Santos\",\n        \"desconto\": \"15%\"\n      }\n    }\n  ],\n  \"callback\": \"https://webhook.site/seu-webhook-aqui\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/rcs/template",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"rcs",
+						"template"
+					]
+				},
+				"description": "Envia mensagem usando template existente. Substitui variáveis automaticamente."
+			}
+		},
+		{
+			"name": "11. Consultar Mensagem por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/messages/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"messages",
+						"1"
+					]
+				},
+				"description": "Consulta status e detalhes de uma mensagem específica pelo ID."
+			}
+		},
+		{
+			"name": "12. Listar Mensagens",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/messages?status=sent&skip=0&limit=20",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"messages"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "sent",
+							"description": "Filtrar por status: sent, delivered, read, failed"
+						},
+						{
+							"key": "skip",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "20"
+						}
+					]
+				},
+				"description": "Lista mensagens enviadas com filtros opcionais por status, data, etc."
+			}
+		},
+		{
+			"name": "13. Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/health",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"health"
+					]
+				},
+				"description": "Verifica se a API está funcionando corretamente."
+			}
+		},
+		{
+			"name": "14. Documentação da API",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/docs",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"docs"
+					]
+				},
+				"description": "Acessa a documentação interativa Swagger da API."
+			}
 		}
 	]
 }

@@ -22,4 +22,11 @@ def get_db():
 
 def create_tables():
     from models import Base
+    # Importar modelos de autenticação para criar as tabelas
+    try:
+        import auth_models
+        print("✅ Tabelas de autenticação importadas")
+    except ImportError as e:
+        print(f"⚠️  Tabelas de autenticação não encontradas: {e}")
+    
     Base.metadata.create_all(bind=engine)

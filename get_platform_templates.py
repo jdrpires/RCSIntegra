@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script para listar templates disponíveis na plataforma PontalTech
+Script para listar templates disponíveis na plataforma Eugen
 """
 
 import httpx
@@ -11,9 +11,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 async def get_platform_templates():
-    """Tenta listar templates da plataforma PontalTech"""
+    """Tenta listar templates da plataforma Eugen"""
     
-    base_url = os.getenv("RCS_API_BASE_URL", "https://pointer-rcs-api-node.pontaltech.com.br")
+    base_url = os.getenv("RCS_API_BASE_URL", "https://pointer-rcs-api-node.eugen.com.br")
     token = os.getenv("RCS_API_TOKEN")
     
     if not token:
@@ -79,10 +79,10 @@ async def get_platform_templates():
     
     print("❌ Não foi possível encontrar endpoint para listar templates")
     print("\n📋 Alternativas:")
-    print("1. Acesse a plataforma PontalTech via web")
+    print("1. Acesse a plataforma Eugen via web")
     print("2. Vá na seção de Templates/Modelos")
     print("3. Copie os IDs dos templates manualmente")
-    print("4. Entre em contato com apoio.ca@pontaltech.com.br")
+    print("4. Entre em contato com apoio.ca@eugen.com.br")
 
 async def test_account_info():
     """Testa endpoint para informações da conta"""
@@ -132,7 +132,7 @@ async def test_account_info():
             print()
 
 async def main():
-    print("🎯 Buscando Templates da Plataforma PontalTech")
+    print("🎯 Buscando Templates da Plataforma Eugen")
     print("=" * 60)
     
     # Tenta listar templates
@@ -145,7 +145,7 @@ async def main():
     
     print("\n📋 Próximos passos:")
     print("1. Se encontrou templates, use os IDs nos testes")
-    print("2. Se não encontrou, acesse a plataforma web da PontalTech")
+    print("2. Se não encontrou, acesse a plataforma web da Eugen")
     print("3. Copie os template_ids manualmente")
     print("4. Use o script test_template_direct.py para testar")
 

@@ -27,7 +27,7 @@ services:
       - "8000:8000"
     environment:
       - DATABASE_URL=postgresql://rcsintegra:rcsintegra123@postgres:5432/rcsintegra
-      - RCS_API_BASE_URL=https://pointer-rcs-api-node.pontaltech.com.br
+      - RCS_API_BASE_URL=https://pointer-rcs-api-node.eugen.com.br
       - RCS_API_TOKEN=${RCS_API_TOKEN}
       - GATEWAY_HOST=0.0.0.0
       - GATEWAY_PORT=8000

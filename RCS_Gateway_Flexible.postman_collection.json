@@ -1,0 +1,439 @@
+{
+	"info": {
+		"_postman_id": "flexible-rcs-gateway-2025",
+		"name": "RCS Gateway - Endpoints Flexíveis",
+		"description": "Collection atualizada com endpoints flexíveis que aceitam qualquer formato de requisição",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "🚀 Endpoints Flexíveis",
+			"item": [
+				{
+					"name": "1. Super Simples (Query Params)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "{{api_key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/send/simple?phone=11999999999&message=Olá! Teste super simples",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"send",
+								"simple"
+							],
+							"query": [
+								{
+									"key": "phone",
+									"value": "11999999999"
+								},
+								{
+									"key": "message",
+									"value": "Olá! Teste super simples"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. Formato Simples (JSON)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-API-Key",
+								"value": "{{api_key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"phone\": \"11999999999\",\n  \"message\": \"Olá! Esta é uma mensagem de teste no formato simples.\",\n  \"campaign\": \"Teste Postman\",\n  \"variables\": {\n    \"nome\": \"Cliente\",\n    \"produto\": \"Teste\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/send",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"send"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3. Formato WhatsApp-like",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-API-Key",
+								"value": "{{api_key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"number\": \"5511999999999\",\n  \"text\": \"Mensagem no estilo WhatsApp! 📱\",\n  \"type\": \"text\",\n  \"campaign\": \"WhatsApp Style\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/send",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"send"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4. Formato com Template",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-API-Key",
+								"value": "{{api_key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"to\": \"11999999999\",\n  \"template\": \"welcome\",\n  \"variables\": {\n    \"name\": \"João\",\n    \"product\": \"Smartphone\",\n    \"company\": \"Sua Empresa\"\n  },\n  \"campaign\": \"Template Campaign\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/send",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"send"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5. Formato Telegram-like",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-API-Key",
+								"value": "{{api_key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"chat_id\": \"5511999999999\",\n  \"text\": \"Mensagem no estilo Telegram! 🚀\",\n  \"campaign\": \"Telegram Style\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/send",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"send"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "📱 Endpoints Originais (Compatibilidade)",
+			"item": [
+				{
+					"name": "RCS Basic (Original)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-API-Key",
+								"value": "{{api_key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"campaign_name\": \"Campanha Original\",\n  \"account\": \"2992\",\n  \"messages\": [\n    {\n      \"number\": \"5511999999999\",\n      \"vars\": {\n        \"nome\": \"Cliente\",\n        \"produto\": \"Smartphone\"\n      }\n    }\n  ],\n  \"content\": {\n    \"text\": {\n      \"message\": \"Olá {{nome}}, seu {{produto}} está disponível!\"\n    }\n  },\n  \"callback\": \"https://webhook.site/unique-id\",\n  \"fallback\": [\n    {\n      \"channel\": \"SMS\",\n      \"content\": \"Ola {{nome}}, seu {{produto}} esta disponivel!\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rcs/basic",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rcs",
+								"basic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RCS Single (Rich Card)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-API-Key",
+								"value": "{{api_key}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"account\": \"2992\",\n  \"messages\": [\n    {\n      \"number\": \"5511999999999\"\n    }\n  ],\n  \"content\": {\n    \"richCard\": {\n      \"title\": \"Oferta Especial! 🎉\",\n      \"description\": \"Aproveite 20% de desconto em todos os produtos.\",\n      \"fileUrl\": \"https://via.placeholder.com/400x300.jpg\",\n      \"suggestions\": [\n        {\n          \"type\": \"openUrl\",\n          \"title\": \"Ver Produtos\",\n          \"value\": \"https://loja.exemplo.com\"\n        },\n        {\n          \"type\": \"call\",\n          \"title\": \"Ligar\",\n          \"value\": \"1140001234\"\n        }\n      ]\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rcs/single",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rcs",
+								"single"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "🔍 Consultas e Utilitários",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Mensagens",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "{{api_key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/messages?limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"messages"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Mensagem por ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "{{api_key}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/messages/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"messages",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Documentação (Swagger)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/docs",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"docs"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "🧪 Testes de Erro",
+			"item": [
+				{
+					"name": "Sem API Key (deve dar erro 401)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"phone\": \"11999999999\",\n  \"message\": \"Teste sem API Key\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/send",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"send"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "API Key Inválida (deve dar erro 401)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-API-Key",
+								"value": "chave_invalida_123",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"phone\": \"11999999999\",\n  \"message\": \"Teste com API Key inválida\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/send",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"send"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "api_key",
+			"value": "jHID31pmJFi97TjO6rQVhKJGNqLdWXYZ8aBcEfGhIjKlMnOpQrStUvWxYz",
+			"type": "string"
+		}
+	]
+}

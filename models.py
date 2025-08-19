@@ -1,9 +1,8 @@
-from sqlalchemy import Column, Integer, String, DateTime, Text, JSON, Boolean
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, DateTime, Text, JSON, Boolean, ForeignKey
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from datetime import datetime
-
-Base = declarative_base()
+from database import Base
 
 class RCSMessage(Base):
     __tablename__ = "rcs_messages"
@@ -16,6 +15,10 @@ class RCSMessage(Base):
     webhook = Column(String(500), nullable=True)
     bot_id = Column(String(100), nullable=True)
     callback_url = Column(String(500), nullable=True)
+    
+    # Referência ao cliente (para multi-tenancy)
+    client_id = Column(String, ForeignKey("clients.id"), nullable=True)
+    client_message_id = Column(String(100), nullable=True)  # ID único para o cliente
     
     # Content fields
     content_type = Column(String(50), nullable=False)  # text, image, video, pdf, richCard, carousel, suggestion
@@ -48,6 +51,9 @@ class RCSMessage(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     sent_at = Column(DateTime(timezone=True), nullable=True)
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    # Relacionamentos (comentado por enquanto)
+    # client = relationship("Client", back_populates="messages")
 
 class RCSTemplate(Base):
     __tablename__ = "rcs_templates"

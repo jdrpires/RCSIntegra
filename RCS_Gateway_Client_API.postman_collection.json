@@ -1,0 +1,455 @@
+{
+	"info": {
+		"_postman_id": "client-api-rcs-gateway-2025",
+		"name": "RCS Gateway - API para Clientes",
+		"description": "Collection do Postman para clientes utilizarem a API RCS Gateway.\n\n## 🔐 Autenticação\n\nTodos os endpoints requerem autenticação via **API Key** no header `X-API-Key`.\n\n## 📋 Como usar:\n\n1. **Configure sua API Key**: Substitua `{{API_KEY}}` pela sua chave fornecida\n2. **Configure seu Client Code**: Substitua `{{CLIENT_CODE}}` pelo seu código de cliente\n3. **Configure a Base URL**: Substitua `{{BASE_URL}}` pela URL do servidor\n\n## 🚀 Endpoints Disponíveis:\n\n- **Enviar Mensagem**: Endpoint principal para envio de mensagens RCS\n- **Consultar Mensagens**: Visualizar suas mensagens enviadas\n- **Consultar Mensagem Específica**: Buscar mensagem por ID\n- **Estatísticas**: Ver estatísticas de uso\n\n## 📞 Suporte:\n\nEm caso de dúvidas, entre em contato com o suporte técnico.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "client-api"
+	},
+	"item": [
+		{
+			"name": "📤 Enviar Mensagem",
+			"item": [
+				{
+					"name": "Enviar Mensagem Básica (Texto)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "{{API_KEY}}",
+								"description": "Sua API Key fornecida pelo administrador"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"client_code\": \"{{CLIENT_CODE}}\",\n  \"user_code\": \"usuario01\",\n  \"message_type\": \"basic\",\n  \"phone_numbers\": [\"5511999999999\"],\n  \"content\": {\n    \"text\": {\n      \"message\": \"Olá! Esta é uma mensagem de teste do RCS Gateway.\"\n    }\n  },\n  \"campaign_name\": \"Teste_Mensagem_Basica\",\n  \"callback_url\": \"https://seu-site.com/callback\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/client/send-message",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"client",
+								"send-message"
+							]
+						},
+						"description": "Envia uma mensagem básica de texto.\n\n**Parâmetros obrigatórios:**\n- `client_code`: Seu código de cliente\n- `message_type`: \"basic\" para mensagens simples\n- `phone_numbers`: Array com números de telefone (formato: 5511999999999)\n- `content`: Conteúdo da mensagem\n\n**Parâmetros opcionais:**\n- `user_code`: Código do usuário (para rastreamento)\n- `campaign_name`: Nome da campanha\n- `callback_url`: URL para receber callbacks"
+					},
+					"response": []
+				},
+				{
+					"name": "Enviar Mensagem com Template",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "{{API_KEY}}",
+								"description": "Sua API Key fornecida pelo administrador"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"client_code\": \"{{CLIENT_CODE}}\",\n  \"user_code\": \"usuario01\",\n  \"message_type\": \"basic\",\n  \"template_id\": \"template_001\",\n  \"phone_numbers\": [\"5511999999999\"],\n  \"variables\": {\n    \"nome\": \"João Silva\",\n    \"produto\": \"Smartphone Galaxy\",\n    \"desconto\": \"20%\"\n  },\n  \"campaign_name\": \"Promocao_Janeiro_2025\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/client/send-message",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"client",
+								"send-message"
+							]
+						},
+						"description": "Envia mensagem usando um template pré-criado.\n\n**Como usar templates:**\n1. Use o `template_id` fornecido pelo administrador\n2. Forneça as `variables` necessárias para substituição\n3. As variáveis serão substituídas no formato {{variavel}}\n\n**Exemplo de template:**\n```\nOlá {{nome}}! Seu {{produto}} está com {{desconto}} de desconto!\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "Enviar Rich Card (Single)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "{{API_KEY}}",
+								"description": "Sua API Key fornecida pelo administrador"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"client_code\": \"{{CLIENT_CODE}}\",\n  \"user_code\": \"usuario01\",\n  \"message_type\": \"single\",\n  \"phone_numbers\": [\"5511999999999\"],\n  \"content\": {\n    \"richCard\": {\n      \"title\": \"🎉 Oferta Especial!\",\n      \"description\": \"Aproveite 50% de desconto em todos os produtos. Oferta válida até o final do mês!\",\n      \"fileUrl\": \"https://exemplo.com/imagem-promocao.jpg\",\n      \"suggestions\": [\n        {\n          \"type\": \"openUrl\",\n          \"title\": \"🛒 Ver Produtos\",\n          \"value\": \"https://loja.exemplo.com/promocao\"\n        },\n        {\n          \"type\": \"call\",\n          \"title\": \"📞 Ligar Agora\",\n          \"value\": \"1140001234\"\n        },\n        {\n          \"type\": \"reply\",\n          \"title\": \"ℹ️ Mais Informações\",\n          \"value\": \"Quero mais informações sobre a promoção\"\n        }\n      ]\n    }\n  },\n  \"campaign_name\": \"Rich_Card_Promocao\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/client/send-message",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"client",
+								"send-message"
+							]
+						},
+						"description": "Envia um Rich Card com imagem, texto e botões interativos.\n\n**Tipos de botões disponíveis:**\n- `openUrl`: Abre uma URL (deve ser HTTPS)\n- `call`: Realiza chamada telefônica\n- `reply`: Envia resposta automática\n\n**Requisitos:**\n- Máximo 4 botões por Rich Card\n- URLs de imagem devem ser HTTPS\n- Imagens: máximo 2MB\n- Título: máximo 200 caracteres\n- Descrição: máximo 2000 caracteres"
+					},
+					"response": []
+				},
+				{
+					"name": "Enviar Múltiplas Mensagens",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "{{API_KEY}}",
+								"description": "Sua API Key fornecida pelo administrador"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"client_code\": \"{{CLIENT_CODE}}\",\n  \"user_code\": \"usuario01\",\n  \"message_type\": \"basic\",\n  \"phone_numbers\": [\n    \"5511999999999\",\n    \"5511888888888\",\n    \"5511777777777\"\n  ],\n  \"content\": {\n    \"text\": {\n      \"message\": \"Mensagem em lote para múltiplos destinatários.\"\n    }\n  },\n  \"campaign_name\": \"Campanha_Lote_Janeiro\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/client/send-message",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"client",
+								"send-message"
+							]
+						},
+						"description": "Envia a mesma mensagem para múltiplos destinatários.\n\n**Dicas:**\n- Máximo recomendado: 100 números por requisição\n- Para listas maiores, divida em múltiplas requisições\n- Use `campaign_name` para agrupar mensagens relacionadas"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints para envio de mensagens RCS"
+		},
+		{
+			"name": "📋 Consultar Mensagens",
+			"item": [
+				{
+					"name": "Listar Todas as Mensagens",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "{{API_KEY}}",
+								"description": "Sua API Key fornecida pelo administrador"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/client/messages?client_code={{CLIENT_CODE}}&limit=50&offset=0",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"client",
+								"messages"
+							],
+							"query": [
+								{
+									"key": "client_code",
+									"value": "{{CLIENT_CODE}}",
+									"description": "Seu código de cliente"
+								},
+								{
+									"key": "limit",
+									"value": "50",
+									"description": "Número máximo de resultados (padrão: 100)"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"description": "Número de registros para pular (paginação)"
+								}
+							]
+						},
+						"description": "Lista todas as suas mensagens enviadas.\n\n**Parâmetros de consulta:**\n- `client_code`: Obrigatório - seu código de cliente\n- `limit`: Opcional - máximo de resultados (padrão: 100)\n- `offset`: Opcional - para paginação (padrão: 0)"
+					},
+					"response": []
+				},
+				{
+					"name": "Filtrar por Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "{{API_KEY}}",
+								"description": "Sua API Key fornecida pelo administrador"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/client/messages?client_code={{CLIENT_CODE}}&status=delivered&limit=20",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"client",
+								"messages"
+							],
+							"query": [
+								{
+									"key": "client_code",
+									"value": "{{CLIENT_CODE}}"
+								},
+								{
+									"key": "status",
+									"value": "delivered",
+									"description": "Status: pending, sent, delivered, read, failed"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						},
+						"description": "Filtra mensagens por status.\n\n**Status disponíveis:**\n- `pending`: Aguardando envio\n- `sent`: Enviada\n- `delivered`: Entregue\n- `read`: Lida pelo destinatário\n- `failed`: Falha no envio"
+					},
+					"response": []
+				},
+				{
+					"name": "Filtrar por Data",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "{{API_KEY}}",
+								"description": "Sua API Key fornecida pelo administrador"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/client/messages?client_code={{CLIENT_CODE}}&start_date=2025-01-01&end_date=2025-01-31",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"client",
+								"messages"
+							],
+							"query": [
+								{
+									"key": "client_code",
+									"value": "{{CLIENT_CODE}}"
+								},
+								{
+									"key": "start_date",
+									"value": "2025-01-01",
+									"description": "Data inicial (formato: YYYY-MM-DD)"
+								},
+								{
+									"key": "end_date",
+									"value": "2025-01-31",
+									"description": "Data final (formato: YYYY-MM-DD)"
+								}
+							]
+						},
+						"description": "Filtra mensagens por período.\n\n**Formato de data:** YYYY-MM-DD\n**Exemplo:** 2025-01-15"
+					},
+					"response": []
+				},
+				{
+					"name": "Filtrar por Número",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "{{API_KEY}}",
+								"description": "Sua API Key fornecida pelo administrador"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/client/messages?client_code={{CLIENT_CODE}}&phone_number=5511999999999",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"client",
+								"messages"
+							],
+							"query": [
+								{
+									"key": "client_code",
+									"value": "{{CLIENT_CODE}}"
+								},
+								{
+									"key": "phone_number",
+									"value": "5511999999999",
+									"description": "Número de telefone específico"
+								}
+							]
+						},
+						"description": "Busca mensagens enviadas para um número específico.\n\n**Formato do número:** 5511999999999 (com código do país)"
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Mensagem por ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "{{API_KEY}}",
+								"description": "Sua API Key fornecida pelo administrador"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/client/messages/{{CLIENT_MESSAGE_ID}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"client",
+								"messages",
+								"{{CLIENT_MESSAGE_ID}}"
+							]
+						},
+						"description": "Consulta uma mensagem específica pelo ID.\n\n**Como obter o ID:**\nO `client_message_id` é retornado na resposta do envio da mensagem.\n\n**Exemplo de ID:** CLI_ABC123_a1b2c3d4"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints para consultar mensagens enviadas"
+		},
+		{
+			"name": "📊 Estatísticas",
+			"item": [
+				{
+					"name": "Estatísticas do Cliente",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "{{API_KEY}}",
+								"description": "Sua API Key fornecida pelo administrador"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/client/stats",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"client",
+								"stats"
+							]
+						},
+						"description": "Retorna estatísticas de uso da sua conta.\n\n**Informações incluídas:**\n- Total de mensagens enviadas\n- Mensagens enviadas hoje\n- Distribuição por status\n- Tipos de mensagem permitidos\n- Limite diário de mensagens"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints para consultar estatísticas de uso"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Script executado antes de cada requisição",
+					"// Você pode adicionar lógica personalizada aqui se necessário"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Testes automáticos executados após cada requisição",
+					"pm.test(\"Status code is successful\", function () {",
+					"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+					"});",
+					"",
+					"pm.test(\"Response time is less than 5000ms\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+					"});",
+					"",
+					"pm.test(\"Content-Type is JSON\", function () {",
+					"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://localhost:8000",
+			"description": "URL base da API RCS Gateway"
+		},
+		{
+			"key": "API_KEY",
+			"value": "SUA_API_KEY_AQUI",
+			"description": "Sua API Key fornecida pelo administrador"
+		},
+		{
+			"key": "CLIENT_CODE",
+			"value": "SEU_CLIENT_CODE_AQUI",
+			"description": "Seu código de cliente fornecido pelo administrador"
+		},
+		{
+			"key": "CLIENT_MESSAGE_ID",
+			"value": "CLI_ABC123_a1b2c3d4",
+			"description": "ID da mensagem retornado após o envio"
+		}
+	]
+}

@@ -93,7 +93,7 @@ async def test_simulation_mode():
     
     print("🎉 Teste em modo simulação concluído!")
     print("\n📋 Próximos passos:")
-    print("1. Entre em contato com apoio.ca@pontaltech.com.br")
+    print("1. Entre em contato com apoio.ca@eugen.com.br")
     print("2. Solicite liberação do IP: 200.170.180.129")
     print("3. Solicite token Bearer válido")
     print("4. Configure SIMULATION_MODE=False no .env")

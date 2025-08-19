@@ -18,13 +18,22 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Importar rotas de autenticação
+try:
+    from auth_routes import router as auth_router
+    from client_routes import router as client_router
+    AUTH_ENABLED = True
+except ImportError as e:
+    logger.warning(f"Rotas de autenticação não encontradas: {e}")
+    AUTH_ENABLED = False
+
 # Cria tabelas do banco
 create_tables()
 
 # Inicializa FastAPI
 app = FastAPI(
-    title="RCS Gateway API",
-    description="Gateway para integração com API RCS da PontalTech",
+    title="RCS Gateway API with Authentication",
+    description="Gateway para integração com API RCS da Eugen com sistema de autenticação",
     version="1.0.0"
 )
 
@@ -36,6 +45,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Incluir rotas de autenticação se disponíveis
+if AUTH_ENABLED:
+    app.include_router(auth_router, prefix="/api", tags=["auth"])
+    app.include_router(client_router, prefix="/api", tags=["client"])
+    logger.info("Sistema de autenticação ativado")
+else:
+    logger.warning("Sistema de autenticação desativado - rotas não encontradas")
 
 @app.get("/")
 async def root():
@@ -77,6 +94,85 @@ async def send_basic_message(
         return responses
     except Exception as e:
         logger.error(f"Erro ao processar mensagem basic: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+# Endpoint flexível que aceita qualquer formato
+@app.post("/api/send", response_model=List[MessageResponse])
+async def send_flexible_message(
+    request: Request,
+    db: Session = Depends(get_db)
+):
+    """
+    Endpoint flexível que aceita diferentes formatos de requisição
+    
+    Formatos suportados:
+    - Simples: {"phone": "11999999999", "message": "Texto"}
+    - WhatsApp-like: {"number": "11999999999", "text": "Texto"}
+    - Template: {"to": "11999999999", "template": "welcome", "variables": {...}}
+    - RCS padrão: formato completo
+    """
+    try:
+        # Importar o mapper
+        from client_mapper import client_mapper
+        
+        # Obter dados da requisição
+        request_data = await request.json()
+        logger.info(f"Requisição flexível recebida: {request_data}")
+        
+        # Mapear para formato RCS padrão
+        mapped_data = client_mapper.map_to_rcs_format(request_data)
+        logger.info(f"Dados mapeados: {mapped_data}")
+        
+        # Converter para RCSBasicRequest
+        rcs_request = RCSBasicRequest(**mapped_data)
+        
+        # Processar mensagem
+        service = RCSService(db)
+        responses = await service.send_basic_message(rcs_request)
+        return responses
+        
+    except ValueError as e:
+        logger.error(f"Erro de mapeamento: {str(e)}")
+        raise HTTPException(status_code=400, detail=f"Formato não suportado: {str(e)}")
+    except Exception as e:
+        logger.error(f"Erro ao processar mensagem flexível: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+# Endpoint específico para formato simples
+@app.post("/api/send/simple")
+async def send_simple_message(
+    phone: str,
+    message: str,
+    campaign: str = "API_Simple",
+    variables: dict = None,
+    db: Session = Depends(get_db)
+):
+    """
+    Endpoint super simples: apenas phone e message
+    
+    Exemplo: POST /api/send/simple?phone=11999999999&message=Olá
+    """
+    try:
+        from client_mapper import client_mapper
+        
+        request_data = {
+            "phone": phone,
+            "message": message,
+            "campaign": campaign,
+            "variables": variables or {}
+        }
+        
+        # Mapear para formato RCS
+        mapped_data = client_mapper.map_to_rcs_format(request_data)
+        rcs_request = RCSBasicRequest(**mapped_data)
+        
+        # Processar mensagem
+        service = RCSService(db)
+        responses = await service.send_basic_message(rcs_request)
+        return responses
+        
+    except Exception as e:
+        logger.error(f"Erro ao processar mensagem simples: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 # Endpoints RCS Single
@@ -372,7 +468,7 @@ async def list_messages(
 @app.get("/api/platform/templates")
 async def get_platform_templates(db: Session = Depends(get_db)):
     """
-    Busca templates disponíveis na plataforma PontalTech
+    Busca templates disponíveis na plataforma Eugen
     
     Retorna lista de templates criados na plataforma.
     """
@@ -387,7 +483,7 @@ async def get_platform_templates(db: Session = Depends(get_db)):
 @app.get("/api/platform/templates/{template_id}")
 async def get_platform_template(template_id: str, db: Session = Depends(get_db)):
     """
-    Busca um template específico na plataforma PontalTech
+    Busca um template específico na plataforma Eugen
     
     Retorna detalhes do template incluindo variáveis disponíveis.
     """

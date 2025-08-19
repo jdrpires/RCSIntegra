@@ -1,0 +1,1787 @@
+components:
+  schemas:
+    APIKey:
+      properties:
+        api_key:
+          title: Api Key
+          type: string
+        client_id:
+          title: Client Id
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        expires_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Expires At
+        id:
+          title: Id
+          type: string
+        is_active:
+          title: Is Active
+          type: boolean
+        key_name:
+          title: Key Name
+          type: string
+        last_used:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Last Used
+        requests_per_day:
+          default: '1000'
+          title: Requests Per Day
+          type: string
+        requests_per_minute:
+          default: '60'
+          title: Requests Per Minute
+          type: string
+        scopes:
+          default:
+          - send_messages
+          - view_messages
+          items:
+            type: string
+          title: Scopes
+          type: array
+      required:
+      - key_name
+      - id
+      - client_id
+      - api_key
+      - is_active
+      - created_at
+      title: APIKey
+      type: object
+    APIKeyCreate:
+      properties:
+        client_id:
+          title: Client Id
+          type: string
+        expires_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Expires At
+        key_name:
+          title: Key Name
+          type: string
+        requests_per_day:
+          default: '1000'
+          title: Requests Per Day
+          type: string
+        requests_per_minute:
+          default: '60'
+          title: Requests Per Minute
+          type: string
+        scopes:
+          default:
+          - send_messages
+          - view_messages
+          items:
+            type: string
+          title: Scopes
+          type: array
+      required:
+      - key_name
+      - client_id
+      title: APIKeyCreate
+      type: object
+    CarouselItem:
+      properties:
+        description:
+          maxLength: 2000
+          title: Description
+          type: string
+        fileUrl:
+          description: URL HTTPS da mídia
+          title: Fileurl
+          type: string
+        suggestions:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/Suggestion'
+            maxItems: 4
+            type: array
+          - type: 'null'
+          title: Suggestions
+        title:
+          title: Title
+          type: string
+      required:
+      - title
+      - description
+      - fileUrl
+      title: CarouselItem
+      type: object
+    Client:
+      properties:
+        allowed_message_types:
+          default:
+          - basic
+          - single
+          items:
+            type: string
+          title: Allowed Message Types
+          type: array
+        api_token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Api Token
+        callback_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Callback Url
+        client_code:
+          title: Client Code
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        email:
+          format: email
+          title: Email
+          type: string
+        id:
+          title: Id
+          type: string
+        is_active:
+          title: Is Active
+          type: boolean
+        max_messages_per_day:
+          default: '1000'
+          title: Max Messages Per Day
+          type: string
+        name:
+          title: Name
+          type: string
+        rcs_account:
+          title: Rcs Account
+          type: string
+        updated_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Updated At
+      required:
+      - name
+      - email
+      - rcs_account
+      - id
+      - client_code
+      - is_active
+      - created_at
+      title: Client
+      type: object
+    ClientCreate:
+      properties:
+        allowed_message_types:
+          default:
+          - basic
+          - single
+          items:
+            type: string
+          title: Allowed Message Types
+          type: array
+        api_token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Api Token
+        callback_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Callback Url
+        email:
+          format: email
+          title: Email
+          type: string
+        max_messages_per_day:
+          default: '1000'
+          title: Max Messages Per Day
+          type: string
+        name:
+          title: Name
+          type: string
+        rcs_account:
+          title: Rcs Account
+          type: string
+      required:
+      - name
+      - email
+      - rcs_account
+      title: ClientCreate
+      type: object
+    ClientMessageResponse:
+      properties:
+        campaign_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Campaign Name
+        client_message_id:
+          title: Client Message Id
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        delivered_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Delivered At
+        error_message:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error Message
+        id:
+          title: Id
+          type: string
+        message_type:
+          title: Message Type
+          type: string
+        phone_number:
+          title: Phone Number
+          type: string
+        read_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Read At
+        sent_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Sent At
+        status:
+          title: Status
+          type: string
+      required:
+      - id
+      - client_message_id
+      - phone_number
+      - status
+      - message_type
+      - created_at
+      title: ClientMessageResponse
+      type: object
+    ClientSendMessageRequest:
+      properties:
+        callback_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Callback Url
+        campaign_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Campaign Name
+        client_code:
+          title: Client Code
+          type: string
+        content:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Content
+        message_type:
+          title: Message Type
+          type: string
+        phone_numbers:
+          items:
+            type: string
+          title: Phone Numbers
+          type: array
+        template_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Template Id
+        user_code:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: User Code
+        variables:
+          anyOf:
+          - type: object
+          - type: 'null'
+          default: {}
+          title: Variables
+      required:
+      - client_code
+      - message_type
+      - phone_numbers
+      title: ClientSendMessageRequest
+      type: object
+    ClientSendMessageResponse:
+      properties:
+        client_message_id:
+          title: Client Message Id
+          type: string
+        details:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Details
+        failed_count:
+          title: Failed Count
+          type: integer
+        message:
+          title: Message
+          type: string
+        message_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Message Id
+        sent_count:
+          title: Sent Count
+          type: integer
+        status:
+          title: Status
+          type: string
+        success:
+          title: Success
+          type: boolean
+      required:
+      - success
+      - client_message_id
+      - status
+      - message
+      - sent_count
+      - failed_count
+      title: ClientSendMessageResponse
+      type: object
+    ClientTemplate:
+      properties:
+        client_id:
+          title: Client Id
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        id:
+          title: Id
+          type: string
+        is_active:
+          title: Is Active
+          type: boolean
+        template_data:
+          title: Template Data
+          type: object
+        template_name:
+          title: Template Name
+          type: string
+        template_type:
+          title: Template Type
+          type: string
+        updated_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Updated At
+        usage_count:
+          title: Usage Count
+          type: string
+        variables:
+          default: []
+          items:
+            type: string
+          title: Variables
+          type: array
+      required:
+      - template_name
+      - template_type
+      - template_data
+      - id
+      - client_id
+      - is_active
+      - usage_count
+      - created_at
+      title: ClientTemplate
+      type: object
+    ClientTemplateCreate:
+      properties:
+        client_id:
+          title: Client Id
+          type: string
+        template_data:
+          title: Template Data
+          type: object
+        template_name:
+          title: Template Name
+          type: string
+        template_type:
+          title: Template Type
+          type: string
+        variables:
+          default: []
+          items:
+            type: string
+          title: Variables
+          type: array
+      required:
+      - template_name
+      - template_type
+      - template_data
+      - client_id
+      title: ClientTemplateCreate
+      type: object
+    ClientUpdate:
+      properties:
+        allowed_message_types:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Allowed Message Types
+        api_token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Api Token
+        callback_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Callback Url
+        email:
+          anyOf:
+          - format: email
+            type: string
+          - type: 'null'
+          title: Email
+        is_active:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Active
+        max_messages_per_day:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Max Messages Per Day
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        rcs_account:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Rcs Account
+      title: ClientUpdate
+      type: object
+    Fallback:
+      properties:
+        channel:
+          default: SMS
+          title: Channel
+          type: string
+        content:
+          description: Mensagem SMS sem acentos
+          maxLength: 160
+          title: Content
+          type: string
+      required:
+      - content
+      title: Fallback
+      type: object
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    ImageContent:
+      properties:
+        image:
+          description: URL HTTPS da imagem
+          title: Image
+          type: string
+      required:
+      - image
+      title: ImageContent
+      type: object
+    LoginRequest:
+      properties:
+        password:
+          title: Password
+          type: string
+        username:
+          title: Username
+          type: string
+      required:
+      - username
+      - password
+      title: LoginRequest
+      type: object
+    MessageContent:
+      properties:
+        carousel:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/CarouselItem'
+            type: array
+          - type: 'null'
+          title: Carousel
+        image:
+          anyOf:
+          - $ref: '#/components/schemas/ImageContent'
+          - type: 'null'
+        pdf:
+          anyOf:
+          - $ref: '#/components/schemas/PDFContent'
+          - type: 'null'
+        richCard:
+          anyOf:
+          - $ref: '#/components/schemas/RichCardContent'
+          - type: 'null'
+        suggestion:
+          anyOf:
+          - $ref: '#/components/schemas/SuggestionContent'
+          - type: 'null'
+        text:
+          anyOf:
+          - $ref: '#/components/schemas/TextContent'
+          - type: 'null'
+        video:
+          anyOf:
+          - $ref: '#/components/schemas/VideoContent'
+          - type: 'null'
+      title: MessageContent
+      type: object
+    MessageRecipient:
+      properties:
+        number:
+          description: Número do telefone
+          title: Number
+          type: string
+        vars:
+          anyOf:
+          - additionalProperties:
+              type: string
+            type: object
+          - type: 'null'
+          description: Variáveis dinâmicas
+          title: Vars
+      required:
+      - number
+      title: MessageRecipient
+      type: object
+    PDFContent:
+      properties:
+        pdf:
+          description: URL HTTPS do PDF
+          title: Pdf
+          type: string
+      required:
+      - pdf
+      title: PDFContent
+      type: object
+    RCSBasicRequest:
+      properties:
+        account:
+          title: Account
+          type: string
+        callback:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Callback
+        campaign_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Campaign Name
+        content:
+          $ref: '#/components/schemas/MessageContent'
+        fallback:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/Fallback'
+            type: array
+          - type: 'null'
+          title: Fallback
+        messages:
+          items:
+            $ref: '#/components/schemas/MessageRecipient'
+          title: Messages
+          type: array
+      required:
+      - account
+      - messages
+      - content
+      title: RCSBasicRequest
+      type: object
+    RCSSingleRequest:
+      properties:
+        account:
+          title: Account
+          type: string
+        callback:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Callback
+        campaign_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Campaign Name
+        content:
+          anyOf:
+          - $ref: '#/components/schemas/MessageContent'
+          - type: 'null'
+        fallback:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/Fallback'
+            type: array
+          - type: 'null'
+          title: Fallback
+        messages:
+          items:
+            $ref: '#/components/schemas/MessageRecipient'
+          title: Messages
+          type: array
+        template_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Template Id
+      required:
+      - account
+      - messages
+      title: RCSSingleRequest
+      type: object
+    RichCardContent:
+      properties:
+        description:
+          maxLength: 2000
+          title: Description
+          type: string
+        fileUrl:
+          description: URL HTTPS da mídia
+          title: Fileurl
+          type: string
+        suggestions:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/Suggestion'
+            maxItems: 4
+            type: array
+          - type: 'null'
+          title: Suggestions
+        title:
+          title: Title
+          type: string
+      required:
+      - title
+      - description
+      - fileUrl
+      title: RichCardContent
+      type: object
+    Suggestion:
+      properties:
+        title:
+          description: Nome/etiqueta do botão
+          title: Title
+          type: string
+        type:
+          description: 'Tipo do botão: openUrl, call, reply'
+          title: Type
+          type: string
+        value:
+          description: Valor do botão (URL, número ou texto)
+          title: Value
+          type: string
+      required:
+      - type
+      - title
+      - value
+      title: Suggestion
+      type: object
+    SuggestionContent:
+      properties:
+        suggestions:
+          items:
+            $ref: '#/components/schemas/Suggestion'
+          maxItems: 4
+          title: Suggestions
+          type: array
+      required:
+      - suggestions
+      title: SuggestionContent
+      type: object
+    TextContent:
+      properties:
+        message:
+          maxLength: 5000
+          title: Message
+          type: string
+      required:
+      - message
+      title: TextContent
+      type: object
+    Token:
+      properties:
+        access_token:
+          title: Access Token
+          type: string
+        client_code:
+          title: Client Code
+          type: string
+        expires_in:
+          title: Expires In
+          type: integer
+        token_type:
+          default: bearer
+          title: Token Type
+          type: string
+      required:
+      - access_token
+      - expires_in
+      - client_code
+      title: Token
+      type: object
+    User:
+      properties:
+        client_id:
+          title: Client Id
+          type: string
+        created_at:
+          format: date-time
+          title: Created At
+          type: string
+        email:
+          format: email
+          title: Email
+          type: string
+        id:
+          title: Id
+          type: string
+        is_active:
+          title: Is Active
+          type: boolean
+        last_login:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Last Login
+        name:
+          title: Name
+          type: string
+        permissions:
+          additionalProperties:
+            type: boolean
+          default:
+            can_send_basic: true
+            can_send_single: true
+            can_use_templates: true
+            can_view_reports: true
+          title: Permissions
+          type: object
+        updated_at:
+          anyOf:
+          - format: date-time
+            type: string
+          - type: 'null'
+          title: Updated At
+        username:
+          title: Username
+          type: string
+      required:
+      - username
+      - email
+      - name
+      - id
+      - client_id
+      - is_active
+      - created_at
+      title: User
+      type: object
+    UserCreate:
+      properties:
+        client_id:
+          title: Client Id
+          type: string
+        email:
+          format: email
+          title: Email
+          type: string
+        name:
+          title: Name
+          type: string
+        password:
+          title: Password
+          type: string
+        permissions:
+          additionalProperties:
+            type: boolean
+          default:
+            can_send_basic: true
+            can_send_single: true
+            can_use_templates: true
+            can_view_reports: true
+          title: Permissions
+          type: object
+        username:
+          title: Username
+          type: string
+      required:
+      - username
+      - email
+      - name
+      - password
+      - client_id
+      title: UserCreate
+      type: object
+    UserUpdate:
+      properties:
+        email:
+          anyOf:
+          - format: email
+            type: string
+          - type: 'null'
+          title: Email
+        is_active:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Is Active
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        permissions:
+          anyOf:
+          - additionalProperties:
+              type: boolean
+            type: object
+          - type: 'null'
+          title: Permissions
+        username:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Username
+      title: UserUpdate
+      type: object
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+      type: object
+    VideoContent:
+      properties:
+        video:
+          description: URL HTTPS do vídeo
+          title: Video
+          type: string
+      required:
+      - video
+      title: VideoContent
+      type: object
+  securitySchemes:
+    HTTPBearer:
+      scheme: bearer
+      type: http
+info:
+  contact:
+    email: suporte@exemplo.com
+    name: Suporte RCS Gateway
+  description: "\n    Gateway em Python para integração com a API RCS da Eugen\
+    \ com sistema completo de autenticação JWT e multi-tenancy.\n    \n    ## Funcionalidades\n\
+    \    \n    ### Para Administradores:\n    - ✅ **Gerenciamento de Clientes**: Criar\
+    \ e gerenciar clientes da API\n    - ✅ **Gerenciamento de Usuários**: Criar usuários\
+    \ para cada cliente\n    - ✅ **API Keys**: Gerar chaves de API para autenticação\n\
+    \    - ✅ **Templates**: Gerenciar templates por cliente\n    \n    ### Para Clientes:\n\
+    \    - ✅ **Envio de Mensagens**: Endpoint unificado para envio via API Key\n \
+    \   - ✅ **Consulta de Mensagens**: Visualizar apenas suas próprias mensagens\n\
+    \    - ✅ **Estatísticas**: Relatórios de uso e performance\n    - ✅ **Multi-tenancy**:\
+    \ Isolamento completo entre clientes\n    \n    ### Tipos de Mensagem Suportados:\n\
+    \    - **Basic**: Mensagens simples com fallback SMS\n    - **Single**: Mensagens\
+    \ com Rich Cards, Carousel, etc.\n    \n    ## Autenticação\n    \n    ### Para\
+    \ Administradores:\n    - Login via JWT Token\n    - Acesso completo ao sistema\n\
+    \    \n    ### Para Clientes:\n    - Autenticação via API Key no header `X-API-Key`\n\
+    \    - Acesso restrito às próprias mensagens e recursos\n    \n    ## Como Usar\n\
+    \    \n    ### 1. Para Clientes (Uso Principal):\n    \n    ```bash\n    # Enviar\
+    \ mensagem básica\n    curl -X POST \"http://localhost:8000/api/client/send-message\"\
+    \ \\\n         -H \"X-API-Key: sua_api_key_aqui\" \\\n         -H \"Content-Type:\
+    \ application/json\" \\\n         -d '{\n           \"client_code\": \"CLI_ABC123\"\
+    ,\n           \"message_type\": \"basic\",\n           \"phone_numbers\": [\"\
+    5511999999999\"],\n           \"content\": {\n             \"text\": {\n     \
+    \          \"message\": \"Olá! Esta é uma mensagem de teste.\"\n             }\n\
+    \           }\n         }'\n    \n    # Consultar mensagens\n    curl -X GET \"\
+    http://localhost:8000/api/client/messages?client_code=CLI_ABC123\" \\\n      \
+    \   -H \"X-API-Key: sua_api_key_aqui\"\n    ```\n    \n    ### 2. Para Administradores:\n\
+    \    \n    ```bash\n    # Login\n    curl -X POST \"http://localhost:8000/api/auth/login\"\
+    \ \\\n         -H \"Content-Type: application/json\" \\\n         -d '{\n    \
+    \       \"username\": \"admin\",\n           \"password\": \"admin123\"\n    \
+    \     }'\n    \n    # Criar cliente\n    curl -X POST \"http://localhost:8000/api/admin/clients\"\
+    \ \\\n         -H \"Authorization: Bearer seu_jwt_token\" \\\n         -H \"Content-Type:\
+    \ application/json\" \\\n         -d '{\n           \"name\": \"Novo Cliente\"\
+    ,\n           \"email\": \"cliente@exemplo.com\",\n           \"rcs_account\"\
+    : \"15886\"\n         }'\n    ```\n    "
+  title: RCS Gateway API with Authentication
+  version: 2.0.0
+openapi: 3.1.0
+paths:
+  /:
+    get:
+      description: Informações da API
+      operationId: root__get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Root
+      tags:
+      - Sistema
+  /api/admin/api-keys:
+    get:
+      description: Listar API Keys
+      operationId: list_api_keys_api_admin_api_keys_get
+      parameters:
+      - in: query
+        name: client_id
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Id
+      - in: query
+        name: skip
+        required: false
+        schema:
+          default: 0
+          title: Skip
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/APIKey'
+                title: Response List Api Keys Api Admin Api Keys Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: List Api Keys
+      tags:
+      - Autenticação e Administração
+    post:
+      description: Criar nova API Key
+      operationId: create_api_key_api_admin_api_keys_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/APIKeyCreate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIKey'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create Api Key
+      tags:
+      - Autenticação e Administração
+  /api/admin/api-keys/{api_key_id}:
+    delete:
+      description: Desativar API Key
+      operationId: delete_api_key_api_admin_api_keys__api_key_id__delete
+      parameters:
+      - in: path
+        name: api_key_id
+        required: true
+        schema:
+          title: Api Key Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Delete Api Key
+      tags:
+      - Autenticação e Administração
+  /api/admin/clients:
+    get:
+      description: Listar clientes
+      operationId: list_clients_api_admin_clients_get
+      parameters:
+      - in: query
+        name: skip
+        required: false
+        schema:
+          default: 0
+          title: Skip
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Client'
+                title: Response List Clients Api Admin Clients Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: List Clients
+      tags:
+      - Autenticação e Administração
+    post:
+      description: Criar novo cliente
+      operationId: create_client_api_admin_clients_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientCreate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create Client
+      tags:
+      - Autenticação e Administração
+  /api/admin/clients/{client_id}:
+    get:
+      description: Obter cliente por ID
+      operationId: get_client_api_admin_clients__client_id__get
+      parameters:
+      - in: path
+        name: client_id
+        required: true
+        schema:
+          title: Client Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Client
+      tags:
+      - Autenticação e Administração
+    put:
+      description: Atualizar cliente
+      operationId: update_client_api_admin_clients__client_id__put
+      parameters:
+      - in: path
+        name: client_id
+        required: true
+        schema:
+          title: Client Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Update Client
+      tags:
+      - Autenticação e Administração
+  /api/admin/users:
+    get:
+      description: Listar usuários
+      operationId: list_users_api_admin_users_get
+      parameters:
+      - in: query
+        name: client_id
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Client Id
+      - in: query
+        name: skip
+        required: false
+        schema:
+          default: 0
+          title: Skip
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/User'
+                title: Response List Users Api Admin Users Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: List Users
+      tags:
+      - Autenticação e Administração
+    post:
+      description: Criar novo usuário
+      operationId: create_user_api_admin_users_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Create User
+      tags:
+      - Autenticação e Administração
+  /api/admin/users/{user_id}:
+    get:
+      description: Obter usuário por ID
+      operationId: get_user_api_admin_users__user_id__get
+      parameters:
+      - in: path
+        name: user_id
+        required: true
+        schema:
+          title: User Id
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get User
+      tags:
+      - Autenticação e Administração
+    put:
+      description: Atualizar usuário
+      operationId: update_user_api_admin_users__user_id__put
+      parameters:
+      - in: path
+        name: user_id
+        required: true
+        schema:
+          title: User Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Update User
+      tags:
+      - Autenticação e Administração
+  /api/auth/login:
+    post:
+      description: Login de usuário
+      operationId: login_api_auth_login_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Login
+      tags:
+      - Autenticação e Administração
+  /api/auth/me:
+    get:
+      description: Informações do usuário atual
+      operationId: get_current_user_info_api_auth_me_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: Successful Response
+      security:
+      - HTTPBearer: []
+      summary: Get Current User Info
+      tags:
+      - Autenticação e Administração
+  /api/client/messages:
+    get:
+      description: "Consultar mensagens enviadas pelo cliente\n\nEste endpoint permite\
+        \ que clientes consultem suas mensagens enviadas\ncom filtros opcionais por\
+        \ data, status, número de telefone, etc.\n\n**Parâmetros de consulta:**\n\
+        - **client_code**: Código do cliente\n- **start_date**: Data inicial (formato:\
+        \ YYYY-MM-DD)\n- **end_date**: Data final (formato: YYYY-MM-DD)\n- **status**:\
+        \ Status da mensagem (pending, sent, delivered, read, failed)\n- **phone_number**:\
+        \ Número de telefone específico\n- **limit**: Limite de resultados (padrão:\
+        \ 100)\n- **offset**: Offset para paginação (padrão: 0)\n\n**Exemplo de resposta:**\n\
+        ```json\n[\n    {\n        \"id\": \"123\",\n        \"client_message_id\"\
+        : \"CLI_ABC123_a1b2c3d4\",\n        \"phone_number\": \"5511999999999\",\n\
+        \        \"status\": \"delivered\",\n        \"message_type\": \"basic\",\n\
+        \        \"campaign_name\": \"Promocao_Janeiro\",\n        \"sent_at\": \"\
+        2025-01-15T10:30:00Z\",\n        \"delivered_at\": \"2025-01-15T10:31:00Z\"\
+        ,\n        \"created_at\": \"2025-01-15T10:30:00Z\"\n    }\n]\n```"
+      operationId: get_messages_api_client_messages_get
+      parameters:
+      - in: query
+        name: client_code
+        required: true
+        schema:
+          title: Client Code
+          type: string
+      - in: query
+        name: start_date
+        required: false
+        schema:
+          title: Start Date
+          type: string
+      - in: query
+        name: end_date
+        required: false
+        schema:
+          title: End Date
+          type: string
+      - in: query
+        name: status
+        required: false
+        schema:
+          title: Status
+          type: string
+      - in: query
+        name: phone_number
+        required: false
+        schema:
+          title: Phone Number
+          type: string
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      - in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          title: Offset
+          type: integer
+      - description: API Key do cliente
+        in: header
+        name: x-api-key
+        required: true
+        schema:
+          description: API Key do cliente
+          title: X-Api-Key
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ClientMessageResponse'
+                title: Response Get Messages Api Client Messages Get
+                type: array
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Messages
+      tags:
+      - Serviços para Clientes
+  /api/client/messages/{client_message_id}:
+    get:
+      description: 'Consultar mensagem específica pelo ID do cliente
+
+
+        **Parâmetros:**
+
+        - **client_message_id**: ID único da mensagem gerado para o cliente'
+      operationId: get_message_by_id_api_client_messages__client_message_id__get
+      parameters:
+      - in: path
+        name: client_message_id
+        required: true
+        schema:
+          title: Client Message Id
+          type: string
+      - description: API Key do cliente
+        in: header
+        name: x-api-key
+        required: true
+        schema:
+          description: API Key do cliente
+          title: X-Api-Key
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientMessageResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Message By Id
+      tags:
+      - Serviços para Clientes
+  /api/client/send-message:
+    post:
+      description: "Endpoint principal para clientes enviarem mensagens RCS\n\nEste\
+        \ endpoint permite que clientes autenticados enviem mensagens RCS\nespecificando\
+        \ o tipo (basic ou single) e opcionalmente um template.\n\n**Parâmetros:**\n\
+        - **client_code**: Código do cliente (deve corresponder ao cliente autenticado)\n\
+        - **user_code**: Código do usuário (opcional)\n- **message_type**: Tipo da\
+        \ mensagem (\"basic\" ou \"single\")\n- **template_id**: ID do template da\
+        \ plataforma (opcional)\n- **phone_numbers**: Lista de números de telefone\n\
+        - **variables**: Variáveis para substituição no template\n- **content**: Conteúdo\
+        \ personalizado (se não usar template)\n- **callback_url**: URL de callback\
+        \ (opcional, usa padrão do cliente)\n- **campaign_name**: Nome da campanha\
+        \ (opcional)\n\n**Exemplo de uso:**\n```json\n{\n    \"client_code\": \"CLI_ABC123\"\
+        ,\n    \"user_code\": \"user001\",\n    \"message_type\": \"basic\",\n   \
+        \ \"template_id\": \"template_001\",\n    \"phone_numbers\": [\"5511999999999\"\
+        ],\n    \"variables\": {\n        \"nome\": \"João\",\n        \"produto\"\
+        : \"Smartphone\"\n    },\n    \"callback_url\": \"https://meusite.com/callback\"\
+        ,\n    \"campaign_name\": \"Promocao_Janeiro\"\n}\n```"
+      operationId: send_message_api_client_send_message_post
+      parameters:
+      - description: API Key do cliente
+        in: header
+        name: x-api-key
+        required: true
+        schema:
+          description: API Key do cliente
+          title: X-Api-Key
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientSendMessageRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientSendMessageResponse'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Send Message
+      tags:
+      - Serviços para Clientes
+  /api/client/stats:
+    get:
+      description: 'Estatísticas do cliente
+
+
+        Retorna estatísticas básicas das mensagens enviadas pelo cliente.'
+      operationId: get_client_stats_api_client_stats_get
+      parameters:
+      - description: API Key do cliente
+        in: header
+        name: x-api-key
+        required: true
+        schema:
+          description: API Key do cliente
+          title: X-Api-Key
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Get Client Stats
+      tags:
+      - Serviços para Clientes
+  /api/client/templates:
+    get:
+      description: Listar templates do cliente
+      operationId: list_client_templates_api_client_templates_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ClientTemplate'
+                title: Response List Client Templates Api Client Templates Get
+                type: array
+          description: Successful Response
+      security:
+      - HTTPBearer: []
+      summary: List Client Templates
+      tags:
+      - Autenticação e Administração
+    post:
+      description: Criar template do cliente
+      operationId: create_client_template_api_client_templates_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientTemplateCreate'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientTemplate'
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - HTTPBearer: []
+      summary: Create Client Template
+      tags:
+      - Autenticação e Administração
+  /api/info:
+    get:
+      description: Informações detalhadas da API
+      operationId: api_info_api_info_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Api Info
+      tags:
+      - Sistema
+  /api/messages:
+    get:
+      description: '[LEGACY] Listar mensagens (mantido para compatibilidade)
+
+
+        ⚠️ **Deprecated**: Use `/api/client/messages` para novos projetos'
+      operationId: list_messages_legacy_api_messages_get
+      parameters:
+      - in: query
+        name: skip
+        required: false
+        schema:
+          default: 0
+          title: Skip
+          type: integer
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: 100
+          title: Limit
+          type: integer
+      - in: query
+        name: status
+        required: false
+        schema:
+          title: Status
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: List Messages Legacy
+      tags:
+      - RCS Original (Compatibilidade)
+  /api/rcs/basic:
+    post:
+      description: '[LEGACY] Envio de mensagem RCS Basic (mantido para compatibilidade)
+
+
+        ⚠️ **Deprecated**: Use `/api/client/send-message` para novos projetos'
+      operationId: send_basic_message_legacy_api_rcs_basic_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RCSBasicRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Send Basic Message Legacy
+      tags:
+      - RCS Original (Compatibilidade)
+  /api/rcs/callback:
+    post:
+      description: '[LEGACY] Receber callback da API RCS (mantido para compatibilidade)
+
+
+        Este endpoint ainda é usado pela Eugen para enviar callbacks.'
+      operationId: receive_callback_legacy_api_rcs_callback_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Callback Data
+              type: object
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Receive Callback Legacy
+      tags:
+      - RCS Original (Compatibilidade)
+  /api/rcs/single:
+    post:
+      description: '[LEGACY] Envio de mensagem RCS Single (mantido para compatibilidade)
+
+
+        ⚠️ **Deprecated**: Use `/api/client/send-message` para novos projetos'
+      operationId: send_single_message_legacy_api_rcs_single_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RCSSingleRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      summary: Send Single Message Legacy
+      tags:
+      - RCS Original (Compatibilidade)
+  /health:
+    get:
+      description: Health check da aplicação
+      operationId: health_check_health_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Health Check
+      tags:
+      - Sistema
