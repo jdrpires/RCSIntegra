@@ -18,10 +18,11 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Importar rotas de autenticação
+# Importar rotas de autenticação e mapeamento
 try:
     from auth_routes import router as auth_router
     from client_routes import router as client_router
+    from client_mapping_routes import router as mapping_router
     AUTH_ENABLED = True
 except ImportError as e:
     logger.warning(f"Rotas de autenticação não encontradas: {e}")
@@ -50,7 +51,9 @@ app.add_middleware(
 if AUTH_ENABLED:
     app.include_router(auth_router, prefix="/api", tags=["auth"])
     app.include_router(client_router, prefix="/api", tags=["client"])
+    app.include_router(mapping_router, prefix="/api/client-mapping", tags=["mapping"])
     logger.info("Sistema de autenticação ativado")
+    logger.info("Sistema de mapeamento DE/PARA ativado")
 else:
     logger.warning("Sistema de autenticação desativado - rotas não encontradas")
 

@@ -1,0 +1,458 @@
+{
+	"info": {
+		"_postman_id": "auth-collection-2025",
+		"name": "RCS Gateway - Authentication Tests",
+		"description": "Collection para testar sistema de autenticação do RCS Gateway",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/health",
+					"host": ["{{base_url}}"],
+					"path": ["health"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {",
+							"    const response = pm.response.json();",
+							"    pm.environment.set('admin_token', response.access_token);",
+							"    pm.environment.set('admin_client_code', response.client_code);",
+							"    pm.test('Login Admin successful', () => {",
+							"        pm.expect(response.access_token).to.exist;",
+							"    });",
+							"} else {",
+							"    pm.test('Login failed', () => {",
+							"        pm.expect.fail('Login should succeed');",
+							"    });",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"Admin123!\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/auth/login",
+					"host": ["{{base_url}}"],
+					"path": ["api", "auth", "login"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Demo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {",
+							"    const response = pm.response.json();",
+							"    pm.environment.set('demo_token', response.access_token);",
+							"    pm.environment.set('demo_client_code', response.client_code);",
+							"    pm.test('Login Demo successful', () => {",
+							"        pm.expect(response.access_token).to.exist;",
+							"    });",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"demo\",\n    \"password\": \"Demo123!\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/auth/login",
+					"host": ["{{base_url}}"],
+					"path": ["api", "auth", "login"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Teste",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {",
+							"    const response = pm.response.json();",
+							"    pm.environment.set('teste_token', response.access_token);",
+							"    pm.environment.set('teste_client_code', response.client_code);",
+							"    pm.test('Login Teste successful', () => {",
+							"        pm.expect(response.access_token).to.exist;",
+							"    });",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"teste\",\n    \"password\": \"Teste123!\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/auth/login",
+					"host": ["{{base_url}}"],
+					"path": ["api", "auth", "login"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Invalid Credentials",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Invalid credentials rejected', () => {",
+							"    pm.expect(pm.response.code).to.equal(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"senhaerrada\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/auth/login",
+					"host": ["{{base_url}}"],
+					"path": ["api", "auth", "login"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Info (Admin)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('User info retrieved', () => {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"    const response = pm.response.json();",
+							"    pm.expect(response.username).to.equal('admin');",
+							"    pm.expect(response.name).to.exist;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{admin_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/auth/me",
+					"host": ["{{base_url}}"],
+					"path": ["api", "auth", "me"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Info (Demo)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{demo_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/auth/me",
+					"host": ["{{base_url}}"],
+					"path": ["api", "auth", "me"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Info (Teste)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{teste_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/auth/me",
+					"host": ["{{base_url}}"],
+					"path": ["api", "auth", "me"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Access Without Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Access denied without token', () => {",
+							"    pm.expect(pm.response.code).to.be.oneOf([401, 403]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/auth/me",
+					"host": ["{{base_url}}"],
+					"path": ["api", "auth", "me"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Clients (Admin)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Clients listed successfully', () => {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"    const response = pm.response.json();",
+							"    pm.expect(response).to.be.an('array');",
+							"    pm.expect(response.length).to.be.greaterThan(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{admin_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/admin/clients",
+					"host": ["{{base_url}}"],
+					"path": ["api", "admin", "clients"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Users (Admin)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{admin_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/admin/users",
+					"host": ["{{base_url}}"],
+					"path": ["api", "admin", "users"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List API Keys (Admin)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{admin_token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/admin/api-keys",
+					"host": ["{{base_url}}"],
+					"path": ["api", "admin", "api-keys"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Client (Admin)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{admin_token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Cliente Teste Postman\",\n    \"email\": \"postman@teste.com\",\n    \"rcs_account\": \"POSTMAN_ACCOUNT\",\n    \"allowed_message_types\": [\"basic\"],\n    \"max_messages_per_day\": \"500\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/admin/clients",
+					"host": ["{{base_url}}"],
+					"path": ["api", "admin", "clients"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New User (Admin)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{admin_token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"postman\",\n    \"email\": \"postman@teste.com\",\n    \"name\": \"Usuario Postman\",\n    \"password\": \"Postman123!\",\n    \"client_id\": \"{{client_id_from_previous_request}}\",\n    \"permissions\": {\n        \"can_send_basic\": true,\n        \"can_view_reports\": true\n    }\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/admin/users",
+					"host": ["{{base_url}}"],
+					"path": ["api", "admin", "users"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Invalid Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Invalid token rejected', () => {",
+							"    pm.expect(pm.response.code).to.equal(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer token_invalido_123"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/auth/me",
+					"host": ["{{base_url}}"],
+					"path": ["api", "auth", "me"]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		}
+	]
+}

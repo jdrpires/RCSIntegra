@@ -29,4 +29,11 @@ def create_tables():
     except ImportError as e:
         print(f"⚠️  Tabelas de autenticação não encontradas: {e}")
     
+    # Importar modelos de mapeamento DE/PARA
+    try:
+        import client_mapping_models
+        print("✅ Tabelas de mapeamento DE/PARA importadas")
+    except ImportError as e:
+        print(f"⚠️  Tabelas de mapeamento não encontradas: {e}")
+    
     Base.metadata.create_all(bind=engine)

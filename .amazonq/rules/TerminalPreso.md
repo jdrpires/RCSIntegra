@@ -1,0 +1,1 @@
+Cuidado para nunca ficar preso ao terminal, verifique se o comando que vai rodar é não deixa o terminal travado, lhe inpossivbilitando de fazer as coisas
