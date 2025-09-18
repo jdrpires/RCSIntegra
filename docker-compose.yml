@@ -9,10 +9,15 @@ services:
       POSTGRES_USER: rcsintegra
       POSTGRES_PASSWORD: rcsintegra123
       POSTGRES_DB: rcsintegra
+      POSTGRES_HOST_AUTH_METHOD: trust
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    command: >
+      postgres -c listen_addresses='*'
+               -c log_statement=all
+               -c log_destination=stderr
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U rcsintegra -d rcsintegra"]
       interval: 10s
@@ -27,7 +32,7 @@ services:
       - "8000:8000"
     environment:
       - DATABASE_URL=postgresql://rcsintegra:rcsintegra123@postgres:5432/rcsintegra
-      - RCS_API_BASE_URL=https://pointer-rcs-api-node.eugen.com.br
+      - RCS_API_BASE_URL=${RCS_API_BASE_URL}
       - RCS_API_TOKEN=${RCS_API_TOKEN}
       - GATEWAY_HOST=0.0.0.0
       - GATEWAY_PORT=8000
